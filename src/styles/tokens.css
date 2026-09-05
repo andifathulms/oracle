@@ -19,11 +19,19 @@
   --rule: #262d38;          /* hairlines */
   --rule-strong: #384252;   /* emphasised hairlines */
 
-  /* ---- Ink ---- */
-  --ink: #e9edf3;
-  --ink-mid: #98a2b1;
-  --ink-faint: #5d6775;
-  --ink-ghost: #3a424f;
+  /* ---- Ink ----
+     Four tiers, every one of them at or above 4.5:1 against every surface in
+     the ground ramp above, including --panel-raised, the lightest. An
+     accessible floor on a dark ground compresses the low end: the steps
+     between mid, faint and ghost are 1.38x and 1.23x, not the wide jumps a
+     light palette allows. That is deliberate and it is survivable, because the
+     bottom tiers are already separated by type size (12px labels, 10.5px micro,
+     9.5px derivation labels) rather than by colour alone. Do not darken these
+     to restore the old contrast between them; make the type smaller instead. */
+  --ink: #e9edf3;       /* 15.96 : 1 on --bg */
+  --ink-mid: #aab4c2;   /*  8.94 : 1 */
+  --ink-faint: #8f99a6; /*  6.50 : 1 */
+  --ink-ghost: #7c899f; /*  5.30 : 1, and 4.51 : 1 on --panel-raised */
 
   /* ---- The one bit ---- */
   --valid: #4fb286;

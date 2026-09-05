@@ -59,10 +59,18 @@ so a single byte's story is a vertical read.
 | `--panel` | `#1A1E24` | Page. Cool dark slate — instrument, not terminal. |
 | `--panel-raised` | `#232830` | Byte cells, the raised working surface. |
 | `--void` | `#12151A` | Unknown bytes. Darker than the surface — a hole, not a cell. |
-| `--ink` | `#E4E8EC` | Known byte values, primary text. |
-| `--ink-mid` | `#8B94A0` | Labels, addresses, secondary. |
-| `--ink-faint` | `#565E6A` | Ticks, disabled. |
+| `--ink` | `#E9EDF3` | Known byte values, primary text. 15.96:1. |
+| `--ink-mid` | `#AAB4C2` | Labels, addresses, secondary. 8.94:1. |
+| `--ink-faint` | `#8F99A6` | Ticks, tertiary. 6.50:1. |
+| `--ink-ghost` | `#7C899F` | The quietest text tier. 5.30:1, and 4.51:1 on `--panel-raised`. |
 | `--rule` | `#333A44` | Hairlines. |
+
+Every ink tier clears 4.5:1 against every surface, `--panel-raised` included. An accessible
+floor on a dark ground compresses the low end: the steps between mid, faint and ghost are 1.38x
+and 1.23x rather than the wide jumps a light palette allows. That is deliberate, and it holds up
+because the bottom tiers are already separated by type size (12 px labels, 10.5 px micro, 9.5 px
+derivation labels) rather than by colour alone. Do not darken them to restore the old separation;
+make the type smaller instead.
 
 Dark ground because the app is largely about darkness resolving into value — the void cells
 need to read as genuinely empty, and they cannot against a light surface. This is chosen for
