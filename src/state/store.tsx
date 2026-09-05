@@ -41,6 +41,7 @@ interface Store {
   fastForward: () => void;
   restart: () => void;
   seekBlock: (blockIndex: number) => void;
+  seek: (index: number) => void;
   newSeed: () => void;
 }
 
@@ -158,6 +159,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [timeline],
   );
 
+  // Scrubbing the whole trace is free — the recovery already exists.
+  const seek = useCallback(
+    (i: number) => {
+      setPlaying(false);
+      setIndex(Math.max(-1, Math.min(i, timeline.events.length - 1)));
+    },
+    [timeline],
+  );
+
   const patch = useCallback((p: Partial<SessionConfig>) => setConfig((c) => ({ ...c, ...p })), []);
 
   const store: Store = {
@@ -182,6 +192,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     fastForward,
     restart,
     seekBlock,
+    seek,
     newSeed: () => patch({ seed: Math.random().toString(36).slice(2, 8) }),
   };
 

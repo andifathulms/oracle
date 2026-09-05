@@ -1,34 +1,116 @@
+@import './section.css';
+
 .shell {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: var(--s-3);
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
-  min-height: 100%;
 }
-.shell-header { border-bottom: 1px solid var(--rule); padding-bottom: var(--s-2); }
-.shell-title { font-family: var(--font-mono); font-size: var(--t-h2); font-weight: 600; }
-.shell-sub { color: var(--ink-mid); font-weight: 400; }
 
-.shell-main { display: flex; flex-direction: column; gap: var(--s-3); }
-.shell-hero { display: grid; grid-template-columns: 1fr 260px; gap: var(--s-3); align-items: start; }
-.shell-left { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
-.shell-panels { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
-
-.shell-footer {
-  margin-top: auto;
-  padding-top: var(--s-2);
-  border-top: 1px solid var(--rule);
+/* ---- Masthead: sticky, hairline-bottomed, translucent over the field ---- */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--rule);
+}
+.masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 14px var(--s-3);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mark { flex: none; display: block; }
+.brand-text { display: flex; flex-direction: column; min-width: 0; }
+.brand-name {
   font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.brand-sub {
   font-size: var(--t-small);
   color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.shell-footer code { color: var(--ink-mid); }
 
-@media (max-width: 900px) {
-  .shell-hero { grid-template-columns: 1fr; }
+.modes {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--void);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
 }
-@media (max-width: 720px) {
-  .shell { padding: var(--s-2); }
+.modes button { background: transparent; border-color: transparent; box-shadow: none; padding: 6px 14px; }
+.modes button.on {
+  background: linear-gradient(180deg, var(--panel-high), var(--panel-raised));
+  border-color: var(--rule-strong);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+/* ---- Page ---- */
+.page {
+  max-width: var(--max-w);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--s-5) var(--s-3) calc(var(--s-6) + 84px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+
+/* Scene 01: the workspace and the oracle, deliberately far apart — the
+   thinness of the channel between them is the point (DESIGN.md §4.1). */
+.interrogation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: var(--s-4);
+  align-items: start;
+}
+.workspace { display: flex; flex-direction: column; gap: var(--s-3); min-width: 0; }
+
+.defences { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+
+/* ---- Colophon ---- */
+.colophon {
+  max-width: var(--max-w);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--s-3) var(--s-3) calc(var(--s-4) + 84px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  color: var(--ink-ghost);
+  border-top: 1px solid var(--rule);
+}
+.colophon code { color: var(--ink-faint); }
+.colophon-dot { color: var(--ink-ghost); }
+
+@media (max-width: 1040px) {
+  .interrogation { grid-template-columns: minmax(0, 1fr) 220px; gap: var(--s-3); }
+}
+@media (max-width: 860px) {
+  /* The oracle moves above the stack on narrow screens (DESIGN.md §4.5). */
+  .interrogation { grid-template-columns: 1fr; }
+  .interrogation > .oracle { order: -1; }
+  .page { gap: var(--s-5); padding-top: var(--s-4); }
+}
+@media (max-width: 640px) {
+  .masthead-inner { padding: 12px var(--s-2); flex-wrap: wrap; gap: var(--s-2); }
+  .brand-sub { display: none; }
+  .modes { margin-left: auto; }
+  .page, .colophon { padding-left: var(--s-2); padding-right: var(--s-2); }
 }

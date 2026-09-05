@@ -1,0 +1,90 @@
+.transport {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--panel) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-top: 1px solid var(--rule);
+  box-shadow: 0 -18px 40px -30px rgba(0, 0, 0, 0.9);
+}
+
+/* The scrub sits on the top hairline of the bar: the whole trace as one line. */
+.transport-scrub { position: relative; height: 14px; margin-top: -7px; }
+.scrub-track {
+  position: absolute;
+  left: 0; right: 0; top: 6px;
+  height: 2px;
+  background: var(--rule);
+}
+.scrub-fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, var(--crafted), var(--recovered));
+}
+.scrub-tick {
+  position: absolute; top: -3px;
+  width: 1px; height: 8px;
+  background: var(--rule-strong);
+}
+.scrub-head {
+  position: absolute; top: -4px;
+  width: 2px; height: 10px;
+  margin-left: -1px;
+  background: var(--recovered-bright);
+  box-shadow: 0 0 10px var(--recovered-glow);
+}
+.scrub-input {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  width: 100%;
+  height: 14px;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+.scrub-input:focus-visible + .scrub-track,
+.transport-scrub:has(.scrub-input:focus-visible) .scrub-track { outline: 2px solid var(--crafted-bright); }
+
+.transport-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 12px var(--s-3) 14px;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.t-group { display: flex; gap: 6px; }
+.t-play .play { min-width: 96px; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+.t-play .glyph { font-size: 10px; color: var(--recovered); }
+
+.t-speed { display: flex; align-items: center; gap: 10px; flex: 1 1 140px; min-width: 120px; max-width: 220px; }
+.t-speed input[type='range'] { flex: 1; height: 2px; }
+
+/* The live readout: five figures, tabular, never reflowing. */
+.t-readout {
+  display: flex;
+  gap: var(--s-3);
+  margin: 0;
+  padding: 6px var(--s-2);
+  background: var(--void);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+}
+.readout { display: flex; flex-direction: column; gap: 1px; min-width: 3.4rem; }
+.readout dd { margin: 0; }
+.readout-v { font-size: var(--t-data); color: var(--ink); font-variant-numeric: tabular-nums; }
+.readout.crafted .readout-v { color: var(--crafted-bright); }
+.readout.gold .readout-v { color: var(--recovered); }
+
+.t-config { margin-left: auto; }
+
+@media (max-width: 900px) {
+  .t-readout { order: 5; width: 100%; justify-content: space-between; }
+  .t-config { margin-left: 0; }
+}
+@media (max-width: 640px) {
+  .transport-inner { padding: 10px var(--s-2) 12px; gap: var(--s-2); }
+  .t-readout { gap: var(--s-1); padding: 6px 10px; }
+  .readout { min-width: 0; }
+}
