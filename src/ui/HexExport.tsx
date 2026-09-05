@@ -1,6 +1,6 @@
 // Keyboard-reachable table equivalent + hex export (DESIGN.md §8, PRD §9). The
 // recovered intermediate and plaintext are copyable as hex; no download API is
-// used (nothing leaves the device, no network).
+// used — nothing leaves the device, and the app has no network code at all.
 import { useState } from 'react';
 import { useStore } from '../state/store';
 import { toHex } from '../engine';
@@ -28,46 +28,61 @@ export function HexExport() {
 
   return (
     <section className="hexexport">
-      <button aria-expanded={open} onClick={() => setOpen((o) => !o)}>
-        {open ? 'hide' : 'show'} recovered bytes (table + hex)
+      <button className="hex-toggle" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <span className={`hex-caret ${open ? 'open' : ''}`} aria-hidden="true">▸</span>
+        {open ? 'hide' : 'show'} the {view.recovered.length} recovered byte
+        {view.recovered.length === 1 ? '' : 's'}
       </button>
+
       {open ? (
-        <div className="hex-panel">
-          <label className="hex-field">
-            <span>recovered intermediate (hex)</span>
-            <textarea readOnly value={toHex(inter)} rows={2} className="mono" />
-          </label>
-          <label className="hex-field">
-            <span>recovered plaintext (hex)</span>
-            <textarea readOnly value={toHex(plain)} rows={2} className="mono" />
-          </label>
-          <table className="hex-table">
-            <caption className="visually-hidden">
-              Recovered bytes, one row per recovered position
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">block</th>
-                <th scope="col">byte</th>
-                <th scope="col">intermediate</th>
-                <th scope="col">plaintext</th>
-                <th scope="col">char</th>
-              </tr>
-            </thead>
-            <tbody>
-              {view.recovered.map((b, i) => (
-                <tr key={i}>
-                  <td>{i}</td>
-                  <td>{b.blockIndex}</td>
-                  <td>{b.index}</td>
-                  <td>{b.intermediate.toString(16).padStart(2, '0')}</td>
-                  <td>{b.plaintext.toString(16).padStart(2, '0')}</td>
-                  <td>{printable(b.plaintext)}</td>
+        <div className="hex-panel panel">
+          <div className="hex-fields">
+            <label className="hex-field">
+              <span className="label">recovered intermediate (hex)</span>
+              <textarea readOnly value={toHex(inter)} rows={2} className="mono" />
+            </label>
+            <label className="hex-field">
+              <span className="label">recovered plaintext (hex)</span>
+              <textarea readOnly value={toHex(plain)} rows={2} className="mono" />
+            </label>
+          </div>
+
+          <div className="hex-table-wrap">
+            <table className="hex-table">
+              <caption className="visually-hidden">
+                Recovered bytes, one row per recovered position
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">block</th>
+                  <th scope="col">byte</th>
+                  <th scope="col">pad</th>
+                  <th scope="col">intermediate</th>
+                  <th scope="col">plaintext</th>
+                  <th scope="col">char</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {view.recovered.map((b, i) => (
+                  <tr key={i}>
+                    <td>{i}</td>
+                    <td>{b.blockIndex}</td>
+                    <td>{b.index}</td>
+                    <td>{b.paddingTarget.toString(16).padStart(2, '0')}</td>
+                    <td className="gold">{b.intermediate.toString(16).padStart(2, '0')}</td>
+                    <td className="gold">{b.plaintext.toString(16).padStart(2, '0')}</td>
+                    <td>{printable(b.plaintext)}</td>
+                  </tr>
+                ))}
+                {view.recovered.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="hex-empty">nothing recovered yet</td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
         </div>
       ) : null}
     </section>
