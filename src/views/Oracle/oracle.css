@@ -1,0 +1,66 @@
+.oracle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-3);
+  background: var(--panel-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.oracle.sealed { border-color: var(--sealed); }
+.oracle-title {
+  font-family: var(--font-mono);
+  font-size: var(--t-h2);
+  color: var(--ink-mid);
+}
+.lamp {
+  width: 120px;
+  height: 96px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--invalid);
+  border: 1px solid var(--rule);
+  transition: background 90ms linear, box-shadow 90ms linear;
+}
+.lamp.valid {
+  background: var(--valid);
+  box-shadow: 0 0 32px rgba(79, 178, 134, 0.5);
+}
+.lamp.idle { opacity: 0.6; }
+.lamp-word {
+  font-family: var(--font-mono);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  color: var(--panel);
+}
+.lamp.invalid .lamp-word, .lamp.idle .lamp-word { color: var(--ink-faint); }
+
+.oracle-calls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.calls-figure {
+  font-family: var(--font-mono);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.calls-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  color: var(--ink-mid);
+}
+.oracle-note {
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  color: var(--ink-mid);
+  text-align: center;
+  max-width: 30ch;
+  line-height: 1.5;
+  margin: 0;
+}

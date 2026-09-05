@@ -1,0 +1,27 @@
+.xor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: var(--s-2) var(--s-3);
+  background: var(--panel-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  min-height: 92px;
+  justify-content: center;
+}
+.xor.idle { align-items: center; }
+.xor-wait { color: var(--ink-faint); font-size: var(--t-small); font-family: var(--font-mono); margin: 0; }
+.xor-line {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+.term { display: inline-flex; flex-direction: column; }
+.term-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
+.term-val { font-family: var(--font-mono); font-size: var(--t-h2); font-weight: 600; }
+.term.crafted .term-val { color: var(--crafted); }
+.term.recovered .term-val { color: var(--recovered); }
+.term.pad .term-val { color: var(--ink-mid); }
+.term-char { color: var(--ink); }
+.xor-op { font-family: var(--font-mono); font-size: var(--t-h2); color: var(--ink-mid); }

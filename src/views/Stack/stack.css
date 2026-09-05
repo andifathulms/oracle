@@ -1,0 +1,109 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.stack-legend {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  color: var(--ink-mid);
+}
+.stack-dir { color: var(--ink-faint); }
+
+.stack-row {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  align-items: center;
+  gap: var(--s-2);
+}
+.row-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  color: var(--ink-mid);
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.row-hint { color: var(--crafted); font-size: 11px; }
+
+.row-cells {
+  display: grid;
+  grid-template-columns: repeat(16, var(--cell));
+  gap: 4px;
+}
+
+.cell {
+  width: var(--cell);
+  height: var(--cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--t-byte);
+  font-weight: 500;
+  border-radius: var(--radius);
+  background: var(--panel-raised);
+  border: 1px solid transparent;
+  transition: transform 120ms linear;
+}
+
+.cell.crafted { color: var(--crafted); }
+.cell.crafted.blank { color: var(--ink-faint); }
+
+/* Void cells are genuine holes — darker than the surface (DESIGN.md §0). */
+.cell.void {
+  background: var(--void);
+  color: transparent;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.cell.intermediate.known,
+.cell.plain.known {
+  color: var(--recovered);
+  background: var(--panel-raised);
+}
+.cell.plain.known { font-weight: 600; }
+
+/* A column under active attack is marked by a subtle raise, not a colour. */
+.cell.active {
+  transform: translateY(-4px);
+  border-color: var(--rule);
+}
+
+/* Resolve-from-void: the value is simply there (DESIGN.md §6.3). Not a fade. */
+@keyframes resolve {
+  0% { transform: scale(0.86); }
+  100% { transform: scale(1); }
+}
+.cell.arriving {
+  animation: resolve 260ms var(--ease-commit);
+}
+
+.stack-addr {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+}
+.stack-addr::before { content: ''; }
+.stack-addr {
+  grid-template-columns: repeat(16, var(--cell));
+  gap: 4px;
+  margin-left: calc(84px + var(--s-2));
+}
+.addr {
+  width: var(--cell);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 720px) {
+  .row-cells, .stack-addr { grid-template-columns: repeat(16, var(--cell-mobile)); }
+  .cell { width: var(--cell-mobile); height: var(--cell-mobile); font-size: 17px; }
+  .addr { width: var(--cell-mobile); }
+  .stack-row { grid-template-columns: 64px 1fr; }
+  .row-cells { overflow-x: auto; }
+}

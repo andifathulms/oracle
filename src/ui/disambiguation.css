@@ -1,0 +1,13 @@
+.disambig {
+  display: flex; align-items: center; gap: var(--s-2);
+  padding: 10px var(--s-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--panel-raised);
+  transition: border-color 500ms var(--ease-standard);
+}
+.disambig.placeholder { opacity: 0.6; }
+.disambig-term { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink-mid); white-space: nowrap; }
+.disambig-detail { font-family: var(--font-sans); font-size: var(--t-small); color: var(--ink-mid); }
+.disambig.genuine { border-color: var(--valid); }
+.disambig.false { border-color: var(--sealed); }
