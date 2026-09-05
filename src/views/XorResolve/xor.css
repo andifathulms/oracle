@@ -4,7 +4,7 @@
   gap: var(--s-3);
   padding: var(--s-3);
 }
-.xor.idle { min-height: 148px; align-items: center; justify-content: center; }
+.xor.idle { min-height: 0; padding: var(--s-4) var(--s-3); align-items: center; justify-content: center; }
 .xor-empty { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
 .xor-empty p { color: var(--ink-faint); font-size: var(--t-small); }
 

@@ -106,6 +106,6 @@
 .channel.live .back { color: var(--ink-mid); }
 .channel.sealed .wire-line { filter: grayscale(1) brightness(0.7); }
 
-@media (max-width: 860px) {
+@media (max-width: 1184px) {
   .channel { display: none; }
 }

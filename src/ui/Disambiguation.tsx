@@ -7,14 +7,17 @@ import { hex } from './format';
 import './disambiguation.css';
 
 export function DisambiguationBar() {
-  const { view, recovery } = useStore();
+  const { view, timeline, index } = useStore();
 
-  // How many false positives this recovery catches in total — evidence the
-  // check is not decorative.
-  const caught = recovery.blocks.reduce(
-    (n, b) => n + b.disambiguations.filter((d) => !d.stillValid).length,
-    0,
-  );
+  // False positives caught *so far* — evidence the check is not decorative.
+  // Deliberately counted over the replayed events only, not over the whole
+  // precomputed trace: the interface must never show a fact the attack has
+  // not yet reached, or it looks like it knew the answer all along.
+  let caught = 0;
+  for (let i = 0; i <= index && i < timeline.events.length; i++) {
+    const ev = timeline.events[i];
+    if (ev.kind === 'disambiguate' && !ev.stillValid) caught++;
+  }
 
   if (!view.disambiguating) {
     return (
@@ -26,7 +29,7 @@ export function DisambiguationBar() {
           in disguise.
         </span>
         <span className="disambig-count label">
-          {caught} caught this run
+          {caught === 0 ? 'none caught yet' : `${caught} caught so far`}
         </span>
       </div>
     );

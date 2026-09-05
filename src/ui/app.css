@@ -100,13 +100,15 @@
 .colophon code { color: var(--ink-faint); }
 .colophon-dot { color: var(--ink-ghost); }
 
-@media (max-width: 1040px) {
-  .interrogation { grid-template-columns: minmax(0, 1fr) 60px 220px; gap: var(--s-2); }
-}
-@media (max-width: 860px) {
-  /* The oracle moves above the stack on narrow screens (DESIGN.md §4.5). */
+/* Below this the three-column interrogation squeezes the stack harder than a
+   phone does — cells were reaching 25px, narrower than the 30px mobile module.
+   So the oracle moves above the stack here rather than at phone widths, and the
+   byte grid gets the full column back (DESIGN.md §4.5). */
+@media (max-width: 1184px) {
   .interrogation { grid-template-columns: 1fr; }
   .interrogation > .oracle { order: -1; }
+}
+@media (max-width: 860px) {
   .page { gap: var(--s-5); padding-top: var(--s-4); }
 }
 @media (max-width: 640px) {

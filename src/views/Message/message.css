@@ -67,6 +67,8 @@
   letter-spacing: var(--track-figure);
 }
 .stat-figure .of { color: var(--ink-ghost); font-size: 0.5em; }
+/* A figure with nothing to report yet is a placeholder, not a headline. */
+.stat-figure .waiting { color: var(--ink-ghost); font-size: 0.5em; }
 .stat-label { color: var(--ink-mid); }
 .stat-note { font-size: var(--t-small); color: var(--ink-faint); line-height: 1.45; max-width: 34ch; }
 

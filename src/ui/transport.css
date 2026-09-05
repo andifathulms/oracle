@@ -79,9 +79,11 @@
 
 .t-config { margin-left: auto; }
 
-@media (max-width: 900px) {
+/* The readout drops to its own row before the config buttons are forced to
+   wrap alone, which left them stranded in the corner. */
+@media (max-width: 1240px) {
   .t-readout { order: 5; width: 100%; justify-content: space-between; }
-  .t-config { margin-left: 0; }
+  .t-config { margin-left: auto; }
 }
 @media (max-width: 640px) {
   .transport-inner { padding: 8px var(--s-2) 10px; gap: 10px; }

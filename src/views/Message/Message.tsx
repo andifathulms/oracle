@@ -68,7 +68,13 @@ export function Message() {
           note="a 16-byte block is roughly 2,000 — cheap, not magical."
         />
         <Stat
-          figure={<span className="mono">{perByte ? perByte.toFixed(0) : '—'}</span>}
+          figure={
+            perByte ? (
+              <span className="mono">{perByte.toFixed(0)}</span>
+            ) : (
+              <span className="mono waiting">—</span>
+            )
+          }
           label="calls per byte"
           note="128 on average, because a byte is found halfway through 256 guesses."
         />

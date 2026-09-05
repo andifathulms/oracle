@@ -120,8 +120,8 @@
   padding-top: var(--s-2);
 }
 
-@media (max-width: 860px) {
-  .oracle { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; }
+@media (max-width: 1184px) {
+  .oracle { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; padding: var(--s-3); gap: var(--s-3); }
   .oracle-head { flex: 1 1 100%; }
   .lamp-bezel { width: 120px; height: 84px; }
   .oracle-question { display: none; }
