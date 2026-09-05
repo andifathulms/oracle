@@ -1,0 +1,49 @@
+/* Design tokens — DESIGN.md §2 (colour), §3 (type), §4.4 (grid). */
+:root {
+  /* Ground */
+  --panel: #1a1e24;
+  --panel-raised: #232830;
+  --void: #12151a;
+  --ink: #e4e8ec;
+  --ink-mid: #8b94a0;
+  --ink-faint: #565e6a;
+  --rule: #333a44;
+
+  /* The one bit */
+  --valid: #4fb286;
+  --invalid: #3a424c;
+
+  /* The recovered / the crafted */
+  --recovered: #c8a24a;
+  --crafted: #5b8db0;
+
+  /* The MAC */
+  --sealed: #7a5b8c;
+
+  /* Type — Plex if locally present, else honest system mono/sans. No web
+     fonts are fetched: nothing leaves the device (PRD §6.5). */
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --t-byte: 22px;
+  --t-figure: 28px;
+  --t-h2: 18px;
+  --t-body: 15px;
+  --t-data: 13px;
+  --t-small: 12px;
+
+  /* Grid & rhythm — 8px base; byte cell 40px desktop */
+  --cell: 40px;
+  --cell-mobile: 34px;
+  --gap: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 40px;
+  --s-5: 64px;
+  --max-w: 76rem;
+  --radius: 2px;
+
+  /* Motion (DESIGN.md §6.2) */
+  --ease-commit: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
