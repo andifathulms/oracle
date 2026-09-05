@@ -25,4 +25,11 @@
   align-items: center;
   justify-content: center;
 }
-.odo-sep { display: block; width: 0.34em; text-align: center; opacity: 0.55; }
+.odo-sep {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 1em;
+  width: 0.34em;
+  opacity: 0.55;
+}

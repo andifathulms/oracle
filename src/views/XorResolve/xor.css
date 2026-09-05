@@ -1,27 +1,90 @@
 .xor {
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
-  padding: var(--s-2) var(--s-3);
-  background: var(--panel-raised);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  min-height: 92px;
-  justify-content: center;
+  gap: var(--s-3);
+  padding: var(--s-3);
 }
-.xor.idle { align-items: center; }
-.xor-wait { color: var(--ink-faint); font-size: var(--t-small); font-family: var(--font-mono); margin: 0; }
+.xor.idle { min-height: 148px; align-items: center; justify-content: center; }
+.xor-empty { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.xor-empty p { color: var(--ink-faint); font-size: var(--t-small); }
+
 .xor-line {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, auto) minmax(0, 1fr);
   align-items: center;
-  gap: var(--s-2);
-  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3);
 }
-.term { display: inline-flex; flex-direction: column; }
-.term-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-faint); }
-.term-val { font-family: var(--font-mono); font-size: var(--t-h2); font-weight: 600; }
-.term.crafted .term-val { color: var(--crafted); }
-.term.recovered .term-val { color: var(--recovered); }
+.xor-line + .xor-line { border-top: 1px solid var(--rule); padding-top: var(--s-3); }
+.xor-step {
+  width: 1.6rem; height: 1.6rem;
+  display: grid; place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--ink-faint);
+}
+
+.xor-eq { display: flex; align-items: stretch; gap: 10px; }
+
+.term {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 74px;
+  padding: 8px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--void);
+  border: 1px solid var(--rule);
+  animation: term-in var(--d-xor) var(--ease-out) both;
+}
+.term-val {
+  font-family: var(--font-mono);
+  font-size: var(--t-figure);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--track-figure);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.term-label { color: var(--ink-ghost); }
+.term.crafted .term-val { color: var(--crafted-bright); }
+.term.gold .term-val { color: var(--recovered-bright); }
 .term.pad .term-val { color: var(--ink-mid); }
-.term-char { color: var(--ink); }
-.xor-op { font-family: var(--font-mono); font-size: var(--t-h2); color: var(--ink-mid); }
+.term-char { font-size: var(--t-h2); color: var(--ink); }
+
+/* The result is the thing that was learned: it carries the border. */
+.term.is-out {
+  border-color: color-mix(in srgb, var(--recovered) 45%, var(--rule));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--recovered) 8%, var(--void)), var(--void));
+  box-shadow: 0 0 24px -8px var(--recovered-glow);
+  animation-delay: 120ms;
+}
+@keyframes term-in {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+
+.xor-op {
+  align-self: center;
+  font-family: var(--font-mono);
+  font-size: var(--t-h2);
+  color: var(--ink-faint);
+}
+.xor-op.eq { color: var(--ink-mid); }
+
+.xor-note {
+  font-size: var(--t-small);
+  color: var(--ink-mid);
+  line-height: 1.5;
+  max-width: 56ch;
+}
+.xor-key { color: var(--ink-ghost); border-top: 1px solid var(--rule); padding-top: var(--s-2); }
+
+@media (max-width: 820px) {
+  .xor-line { grid-template-columns: 1.6rem minmax(0, 1fr); }
+  .xor-note { grid-column: 2; }
+  .xor-eq { flex-wrap: wrap; }
+  .term { min-width: 64px; padding: 6px 10px; }
+}
