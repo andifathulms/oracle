@@ -80,7 +80,8 @@
 }
 .workspace { display: flex; flex-direction: column; gap: var(--s-3); min-width: 0; }
 
-.defences { display: grid; grid-template-columns: 1fr; gap: var(--s-3); }
+.defences { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: var(--s-3); align-items: start; }
+@media (max-width: 960px) { .defences { grid-template-columns: 1fr; } }
 
 /* ---- Colophon ---- */
 .colophon {

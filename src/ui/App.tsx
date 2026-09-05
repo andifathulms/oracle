@@ -7,6 +7,7 @@ import { CandidateField } from '../views/Sweep/CandidateField';
 import { XorResolve } from '../views/XorResolve/XorResolve';
 import { Message } from '../views/Message/Message';
 import { CipherPanel } from '../views/CipherPanel/CipherPanel';
+import { Silence } from '../views/Silence/Silence';
 import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
 import { Transport } from './Transport';
@@ -120,6 +121,7 @@ function Shell() {
           >
             <div className="defences">
               <CipherPanel />
+              <Silence />
             </div>
           </Section>
 
