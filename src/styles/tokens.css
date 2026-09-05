@@ -1,49 +1,107 @@
-/* Design tokens — DESIGN.md §2 (colour), §3 (type), §4.4 (grid). */
+/* Design tokens — DESIGN.md §2 (colour), §3 (type), §4.4 (grid), §6 (motion).
+ *
+ * v2: the palette is deepened into a layered ground so the void reads as a
+ * genuine hole at every elevation, and each signal hue gains a bright and a
+ * glow variant so an event can be *lit* rather than merely coloured. The four
+ * meanings are unchanged and still never share a hue: the bit is green, the
+ * recovered is gold, the crafted is blue, the seal is violet.
+ */
 :root {
-  /* Ground */
-  --panel: #1a1e24;
-  --panel-raised: #232830;
-  --void: #12151a;
-  --ink: #e4e8ec;
-  --ink-mid: #8b94a0;
-  --ink-faint: #565e6a;
-  --rule: #333a44;
+  color-scheme: dark;
 
-  /* The one bit */
+  /* ---- Ground: six steps, coolest at the bottom ---- */
+  --void: #0a0d12;          /* unknown bytes — below every surface */
+  --bg: #0f1218;            /* page */
+  --bg-tint: #12161d;       /* page wash under the hero */
+  --panel: #161a22;         /* panels */
+  --panel-raised: #1d222c;  /* byte cells, the working surface */
+  --panel-high: #262c38;    /* hover / pressed */
+  --rule: #262d38;          /* hairlines */
+  --rule-strong: #384252;   /* emphasised hairlines */
+
+  /* ---- Ink ---- */
+  --ink: #e9edf3;
+  --ink-mid: #98a2b1;
+  --ink-faint: #5d6775;
+  --ink-ghost: #3a424f;
+
+  /* ---- The one bit ---- */
   --valid: #4fb286;
-  --invalid: #3a424c;
+  --valid-bright: #74d7a8;
+  --valid-glow: rgba(79, 178, 134, 0.55);
+  --invalid: #313947;       /* a no is almost nothing */
+  --invalid-ink: #6c7686;
 
-  /* The recovered / the crafted */
+  /* ---- The recovered (gold) and the crafted (blue) ---- */
   --recovered: #c8a24a;
+  --recovered-bright: #e9c979;
+  --recovered-glow: rgba(200, 162, 74, 0.42);
   --crafted: #5b8db0;
+  --crafted-bright: #8ec2e6;
+  --crafted-glow: rgba(91, 141, 176, 0.42);
 
-  /* The MAC */
+  /* ---- The MAC ---- */
   --sealed: #7a5b8c;
+  --sealed-bright: #b28ec9;
+  --sealed-glow: rgba(122, 91, 140, 0.45);
 
-  /* Type — Plex if locally present, else honest system mono/sans. No web
-     fonts are fetched: nothing leaves the device (PRD §6.5). */
+  /* ---- Type ----
+     Plex if locally present, else honest system mono/sans. No web fonts are
+     fetched: nothing leaves the device (PRD §6.5). */
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', 'Menlo', 'Consolas', monospace;
   --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --t-byte: 22px;
-  --t-figure: 28px;
-  --t-h2: 18px;
+  /* Fluid scale, 380px → 1400px viewport. Base 15px. */
+  --t-display: clamp(30px, 1.6rem + 1.8vw, 52px);  /* the big figures */
+  --t-figure: clamp(24px, 1.2rem + 1.1vw, 34px);
+  --t-byte: clamp(17px, 0.9rem + 0.5vw, 22px);
+  --t-h2: clamp(15px, 0.85rem + 0.25vw, 18px);
   --t-body: 15px;
   --t-data: 13px;
   --t-small: 12px;
+  --t-micro: 10.5px;
 
-  /* Grid & rhythm — 8px base; byte cell 40px desktop */
+  --track-label: 0.06em;   /* the only tracking, on micro labels */
+  --track-figure: -0.02em;
+
+  /* ---- Grid & rhythm — 8px base ---- */
   --cell: 40px;
-  --cell-mobile: 34px;
+  --cell-mobile: 30px;
   --gap: 8px;
+  --s-1: 8px;
   --s-2: 16px;
   --s-3: 24px;
   --s-4: 40px;
   --s-5: 64px;
-  --max-w: 76rem;
-  --radius: 2px;
+  --s-6: 96px;
+  --max-w: 84rem;
+  --radius: 3px;
+  --radius-lg: 6px;
+  --radius-panel: 8px;
 
-  /* Motion (DESIGN.md §6.2) */
+  /* ---- Elevation: hairline + a low, wide shade. Never a soft drop shadow. ---- */
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.02) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.8);
+  --shadow-void: inset 0 1px 3px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+
+  /* ---- Motion (DESIGN.md §6.2) ---- */
   --ease-commit: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --d-lamp: 90ms;
+  --d-commit: 260ms;
+  --d-xor: 400ms;
+  --d-beat: 500ms;
+  --d-scene: 420ms;
+}
+
+/* Reduced motion: the theatre goes, the values stay (DESIGN.md §6.6). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-lamp: 0ms;
+    --d-commit: 0ms;
+    --d-xor: 0ms;
+    --d-beat: 0ms;
+    --d-scene: 0ms;
+  }
 }
