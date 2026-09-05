@@ -25,7 +25,7 @@ export function DisambiguationBar() {
         <span className="disambig-dot" />
         <span className="disambig-term">disambiguation</span>
         <span className="disambig-detail">
-          the last byte double-checks itself before committing — a genuine 0x01, or a longer pad
+          the last byte double-checks itself before committing: a genuine 0x01, or a longer pad
           in disguise.
         </span>
         <span className="disambig-count label">
@@ -44,8 +44,8 @@ export function DisambiguationBar() {
       <span className="disambig-term">disambiguation</span>
       <span className="disambig-detail">
         {genuine
-          ? 'byte 14 was perturbed and the padding still held. a genuine 0x01 — the byte commits.'
-          : 'byte 14 was perturbed and the padding broke. the hit was a longer pad — the sweep resumes.'}
+          ? 'byte 14 was perturbed and the padding still held. a genuine 0x01, so the byte commits.'
+          : 'byte 14 was perturbed and the padding broke. the hit was a longer pad, so the sweep resumes.'}
       </span>
       {probe ? (
         <span className="disambig-probe mono" aria-hidden="true">

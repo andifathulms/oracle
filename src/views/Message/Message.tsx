@@ -65,14 +65,14 @@ export function Message() {
         <Stat
           figure={<Odometer value={callsAt} />}
           label="oracle calls"
-          note="a 16-byte block is roughly 2,000 — cheap, not magical."
+          note="a 16-byte block is roughly 2,000. cheap, not magical."
         />
         <Stat
           figure={
             perByte ? (
               <span className="mono">{perByte.toFixed(0)}</span>
             ) : (
-              <span className="mono waiting">—</span>
+              <span className="mono waiting">··</span>
             )
           }
           label="calls per byte"

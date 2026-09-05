@@ -18,7 +18,7 @@ export function CandidateField() {
   return (
     <section className={`field ${idle ? 'idle' : ''}`} aria-label="Candidate field">
       <header className="field-head">
-        <h3 className="field-title label">candidates for byte {view.activeIndex ?? '—'}</h3>
+        <h3 className="field-title label">candidates for byte {view.activeIndex ?? '··'}</h3>
         <span className="field-count mono">
           <span className="tried">{tried.size}</span>
           <span className="of">/256 asked</span>

@@ -138,7 +138,7 @@ function Shell() {
           seed <code>{config.seed}</code>
         </span>
         <span className="colophon-dot" aria-hidden="true">·</span>
-        <span>everything is synthetic and stays on this device — the app has no network code at all.</span>
+        <span>everything is synthetic and stays on this device. the app has no network code at all.</span>
       </footer>
     </div>
   );

@@ -79,7 +79,7 @@ export function CipherPanel() {
       </div>
 
       <p className="cipher-point">
-        the switch changes nothing about the attack. the same recovery, at the same cost — the two
+        the switch changes nothing about the attack. the same recovery, at the same cost. the two
         counts differ only in where the sweeps happened to hit. the cipher is not the weakness; the
         padding check is the hole.
       </p>

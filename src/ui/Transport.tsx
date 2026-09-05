@@ -68,10 +68,10 @@ export function Transport() {
 
         <dl className="t-readout" aria-label="Live readout">
           <Readout k="block" v={`${view.currentBlock + 1}/${recovery.blocks.length}`} />
-          <Readout k="byte" v={view.activeIndex == null ? '—' : String(view.activeIndex)} />
+          <Readout k="byte" v={view.activeIndex == null ? '··' : String(view.activeIndex)} />
           <Readout
             k="guess"
-            v={view.candidate == null ? '—' : hex(view.candidate)}
+            v={view.candidate == null ? '··' : hex(view.candidate)}
             tone="crafted"
           />
           <Readout k="found" v={`${done}/${totalBytes}`} tone="gold" />

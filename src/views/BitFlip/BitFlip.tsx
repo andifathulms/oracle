@@ -38,7 +38,7 @@ export function BitFlip() {
   return (
     <Section
       index="06"
-      title="tampering — malleability without the key"
+      title="tampering: malleability without the key"
       lede="the padding oracle reads a message. the same property rewrites one. flipping a byte of the previous ciphertext block flips exactly that byte of the plaintext behind it."
       aside={<button onClick={() => setMode('recover')}>back to recovery</button>}
       wide
@@ -89,7 +89,7 @@ export function BitFlip() {
           </span>
           <p className="bf-copy">
             {plan.deltas.length === 0
-              ? 'nothing to change — the message already reads that way.'
+              ? 'nothing to change. the message already reads that way.'
               : `${plan.deltas.length} byte${plan.deltas.length === 1 ? '' : 's'} of the previous ciphertext block, exclusive-or'd. the server decrypts the new message with the same key it always had, and nothing in the ciphertext looks wrong to it.`}
           </p>
         </div>
