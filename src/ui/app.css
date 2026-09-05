@@ -36,10 +36,7 @@
 }
 .brand-sub {
   font-size: var(--t-small);
-  color: var(--ink-faint);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--ink-faint);   /* 6.50 : 1 on --bg */
 }
 
 .modes {
@@ -113,7 +110,6 @@
 }
 @media (max-width: 640px) {
   .masthead-inner { padding: 12px var(--s-2); flex-wrap: wrap; gap: var(--s-2); }
-  .brand-sub { display: none; }
   .modes { margin-left: auto; }
   .page, .colophon { padding-left: var(--s-2); padding-right: var(--s-2); }
 }

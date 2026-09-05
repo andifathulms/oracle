@@ -10,6 +10,7 @@ import { CipherPanel } from '../views/CipherPanel/CipherPanel';
 import { Silence } from '../views/Silence/Silence';
 import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
+import { Overture } from './Overture';
 import { Transport } from './Transport';
 import { DisambiguationBar } from './Disambiguation';
 import { HexExport } from './HexExport';
@@ -81,6 +82,8 @@ function Shell() {
         </main>
       ) : (
         <main className="page">
+          <Overture />
+
           <Section
             index="01"
             title="The interrogation"

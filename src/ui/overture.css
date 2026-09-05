@@ -1,0 +1,65 @@
+/* The overture: the one place the app speaks before it demonstrates.
+   Left-aligned rather than centred, on the same left edge as every scene below,
+   so the page has one reading axis. Sized to sit inside the first viewport with
+   the sticky masthead above it and the fixed transport below. */
+.overture {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.overture-title {
+  font-family: var(--font-mono);
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0;
+  /* The line break is authored in the markup at desktop. Below 640px the
+     headline sets its own breaks, so the <br> is neutralised there. */
+  text-wrap: balance;
+}
+
+.overture-lede {
+  font-family: var(--font-sans);
+  font-size: var(--t-lede);
+  line-height: 1.5;
+  color: var(--ink-mid);   /* 8.94 : 1 on --bg */
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* The primary action. It inherits the button base in global.css and then takes
+   the gold, because starting the recovery is the one thing on this screen that
+   produces gold. */
+.overture-cta {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: var(--radius-lg);
+  color: var(--bg);                       /* 8.7 : 1 on the gold below */
+  background: linear-gradient(180deg, var(--recovered-bright), var(--recovered));
+  border-color: var(--recovered);
+  box-shadow: var(--shadow-1);
+}
+.overture-cta:hover {
+  background: linear-gradient(180deg, #f2d68d, var(--recovered-bright));
+  border-color: var(--recovered-bright);
+  color: var(--bg);
+}
+.overture-cta:active { transform: translateY(1px); }
+
+@media (max-width: 640px) {
+  .overture { gap: var(--s-2); }
+  .overture-title br { display: none; }
+  .overture-cta { width: 100%; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overture-cta:active { transform: none; }
+}

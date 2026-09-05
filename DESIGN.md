@@ -171,6 +171,23 @@ carry the app and need no competition.
 
 ## 4. Layout
 
+### 4.0 The overture
+
+Before the instrument, one statement. A visitor arriving at the app meets a
+recovery that has not started: an idle counter reading 0 and an idle lamp
+holding no answer. Without a frame, that reads as a broken tool rather than a
+loaded demonstration.
+
+The overture is three elements and no more: a `--t-display` headline, one
+`--t-lede` paragraph giving the mechanism and the stakes in plain language
+before any jargon, and a single gold button that starts the recovery. It is the
+only gold control in the app, because starting the sweep is the one action on
+that screen that produces gold.
+
+It renders no attack state and holds no logic. Its button is a second trigger
+for the transport's existing toggle, placed in the content because the transport
+is fixed to the bottom of the window and reads as chrome.
+
 ### 4.1 The interrogation
 
 ```
