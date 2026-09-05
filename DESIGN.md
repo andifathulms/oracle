@@ -220,7 +220,11 @@ point — a lot is being extracted through a very small opening.
 ### 4.2 The oracle panel
 
 A sealed box with one lamp. The lamp is `--invalid` (dim) or `--valid` (bright) and shows the
-reply to the most recent query. The call counter sits beneath it.
+reply to the most recent query. It has three display states, not two: `yes` and `no` are
+reserved for actual replies, and before any question has been asked it shows `··`, the same
+void glyph the stack uses for a byte it does not have. Rendering the idle state as `no` made
+the app appear to have queried and been refused before the visitor had done anything, at the
+largest type size on the landing view. The call counter sits beneath it.
 
 Nothing else is in this panel. No history strip of past replies, no confidence, no hint. One
 lamp, one number. Its austerity is the guarantee that the attack is working from one bit

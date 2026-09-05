@@ -7,8 +7,14 @@ import './oracle.css';
 
 export function OraclePanel() {
   const { view, callsAt, config } = useStore();
-  const on = view.lamp === 'valid';
   const sealed = config.mac;
+
+  // Three display states, not two. 'idle' means no question has been asked yet,
+  // and rendering it as "no" made the app look like it had already queried and
+  // been refused, at the largest type size on the landing view. yes/no are now
+  // reserved for actual replies; the void glyph stands for an absent one, the
+  // same way it does in the stack.
+  const word = view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : '··';
 
   return (
     <aside className={`oracle panel ${sealed ? 'sealed' : ''}`} aria-label="The oracle">
@@ -26,7 +32,7 @@ export function OraclePanel() {
           key={view.eventIndex}
         >
           <span className="lamp-glass" aria-hidden="true" />
-          <span className="lamp-word">{on ? 'yes' : 'no'}</span>
+          <span className="lamp-word">{word}</span>
         </div>
         <div className="lamp-ring" aria-hidden="true" />
       </div>
