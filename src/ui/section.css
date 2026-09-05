@@ -36,12 +36,12 @@
 .scene-titles { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .scene-title {
   font-family: var(--font-mono);
-  font-size: var(--t-h2);
+  font-size: var(--t-h1);
   font-weight: 600;
   color: var(--ink);
 }
 .scene-lede {
-  font-size: var(--t-small);
+  font-size: var(--t-body);
   color: var(--ink-mid);
   max-width: 68ch;
   line-height: 1.55;

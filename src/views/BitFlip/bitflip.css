@@ -84,8 +84,8 @@
   transition: color var(--d-commit) var(--ease-commit);
 }
 .bf-count.on { color: var(--crafted-bright); }
-.bf-copy { font-size: var(--t-small); color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
-.bf-caveat { font-size: var(--t-small); color: var(--ink-faint); line-height: 1.55; max-width: 68ch; }
+.bf-copy { font-size: var(--t-body); color: var(--ink-mid); line-height: 1.55; max-width: 62ch; }
+.bf-caveat { font-size: var(--t-body); color: var(--ink-faint); line-height: 1.55; max-width: 68ch; }
 
 @media (max-width: 720px) {
   .bf-grid { --label-w: 78px; --colgap: 4px; --cellw: 28px; overflow-x: auto; scrollbar-width: thin; }

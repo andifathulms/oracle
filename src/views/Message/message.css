@@ -44,7 +44,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-void);
 }
-.msg-empty { color: var(--ink-ghost); font-size: var(--t-small); letter-spacing: 0; }
+.msg-empty { color: var(--ink-mid); font-size: var(--t-body); letter-spacing: 0; }
 .ch { display: inline; white-space: pre; }
 .ch.void { color: var(--ink-ghost); }
 .ch.np { color: var(--ink-faint); }
@@ -70,7 +70,7 @@
 /* A figure with nothing to report yet is a placeholder, not a headline. */
 .stat-figure .waiting { color: var(--ink-ghost); font-size: 0.5em; }
 .stat-label { color: var(--ink-mid); }
-.stat-note { font-size: var(--t-small); color: var(--ink-faint); line-height: 1.45; max-width: 34ch; }
+.stat-note { font-size: var(--t-body); color: var(--ink-faint); line-height: 1.45; max-width: 34ch; }
 
 .msg-bar { height: 2px; background: var(--void); border-radius: 2px; overflow: hidden; }
 .msg-bar-fill {
