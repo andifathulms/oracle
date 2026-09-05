@@ -38,11 +38,11 @@ export function HexExport() {
         <div className="hex-panel panel">
           <div className="hex-fields">
             <label className="hex-field">
-              <span className="label">recovered intermediate (hex)</span>
+              <span className="label">Recovered intermediate (hex)</span>
               <textarea readOnly value={toHex(inter)} rows={2} className="mono" />
             </label>
             <label className="hex-field">
-              <span className="label">recovered plaintext (hex)</span>
+              <span className="label">Recovered plaintext (hex)</span>
               <textarea readOnly value={toHex(plain)} rows={2} className="mono" />
             </label>
           </div>
@@ -77,7 +77,7 @@ export function HexExport() {
                 ))}
                 {view.recovered.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="hex-empty">nothing recovered yet</td>
+                    <td colSpan={7} className="hex-empty">Nothing recovered yet</td>
                   </tr>
                 ) : null}
               </tbody>

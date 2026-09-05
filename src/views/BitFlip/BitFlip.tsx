@@ -38,14 +38,14 @@ export function BitFlip() {
   return (
     <Section
       index="06"
-      title="tampering: malleability without the key"
-      lede="the padding oracle reads a message. the same property rewrites one. flipping a byte of the previous ciphertext block flips exactly that byte of the plaintext behind it."
-      aside={<button onClick={() => setMode('recover')}>back to recovery</button>}
+      title="Tampering: malleability without the key"
+      lede="The padding oracle reads a message. The same property rewrites one. Flipping a byte of the previous ciphertext block flips exactly that byte of the plaintext behind it."
+      aside={<button onClick={() => setMode('recover')}>Back to recovery</button>}
       wide
     >
       <div className="bitflip">
         <label className="bf-field">
-          <span className="label">what the attacker wants the server to read (16 characters)</span>
+          <span className="label">What the attacker wants the server to read (16 characters)</span>
           <input
             className="mono"
             value={desired}
@@ -56,8 +56,8 @@ export function BitFlip() {
         </label>
 
         <div className="bf-grid">
-          <CharRow label="what it says now" tone="plain" bytes={current} />
-          <CharRow label="what it should say" tone="want" bytes={target} mark={changed} />
+          <CharRow label="What it says now" tone="plain" bytes={current} />
+          <CharRow label="What it should say" tone="want" bytes={target} mark={changed} />
           <DeltaRow label="Cᵢ₋₁ before" bytes={PREV} />
           <DeltaRow label="Cᵢ₋₁ after" bytes={tampered} mark={changed} tone="crafted" />
           <div className="bf-row xor-row">
@@ -89,14 +89,14 @@ export function BitFlip() {
           </span>
           <p className="bf-copy">
             {plan.deltas.length === 0
-              ? 'nothing to change. the message already reads that way.'
+              ? 'Nothing to change. The message already reads that way.'
               : `${plan.deltas.length} byte${plan.deltas.length === 1 ? '' : 's'} of the previous ciphertext block, exclusive-or'd. the server decrypts the new message with the same key it always had, and nothing in the ciphertext looks wrong to it.`}
           </p>
         </div>
 
         <p className="bf-caveat">
-          this is why a padding oracle is not the only cost of an unauthenticated
-          ciphertext. a MAC over the ciphertext stops this the same way it stops the
+          This is why a padding oracle is not the only cost of an unauthenticated
+          ciphertext. A MAC over the ciphertext stops this the same way it stops the
           oracle: the tag no longer matches, and the message is rejected before it is
           decrypted.
         </p>

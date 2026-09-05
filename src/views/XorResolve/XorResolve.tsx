@@ -19,7 +19,7 @@ export function XorResolve() {
       <section className="xor idle panel" aria-label="XOR resolution">
         <div className="xor-empty">
           <span className="label">waiting</span>
-          <p>a byte resolves here as each one is recovered. run the sweep.</p>
+          <p>A byte resolves here as each one is recovered. Run the sweep.</p>
         </div>
       </section>
     );
@@ -38,7 +38,7 @@ export function XorResolve() {
   return (
     <section className="xor panel" aria-label="XOR resolution" key={stamp}>
       <Line
-        note="the oracle accepted this crafted byte, so the decrypted byte under it must equal the padding value."
+        note="The oracle accepted this crafted byte, so the decrypted byte under it must equal the padding value."
         step="1"
         terms={[
           { label: 'crafted', val: hex(crafted), kind: 'crafted' },
@@ -60,7 +60,7 @@ export function XorResolve() {
           char: isPrintable(commit.plaintext) ? printable(commit.plaintext) : undefined,
         }}
       />
-      <p className="xor-key label">no key was used on either line.</p>
+      <p className="xor-key label">No key was used on either line.</p>
     </section>
   );
 }

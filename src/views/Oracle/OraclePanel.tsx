@@ -13,7 +13,7 @@ export function OraclePanel() {
   return (
     <aside className={`oracle panel ${sealed ? 'sealed' : ''}`} aria-label="The oracle">
       <div className="oracle-head">
-        <h3 className="oracle-title">the oracle</h3>
+        <h3 className="oracle-title">The oracle</h3>
         <span className="oracle-badge label">{sealed ? 'sealed' : 'padding check'}</span>
       </div>
 
@@ -31,7 +31,7 @@ export function OraclePanel() {
         <div className="lamp-ring" aria-hidden="true" />
       </div>
 
-      <p className="oracle-question">is the padding valid?</p>
+      <p className="oracle-question">Is the padding valid?</p>
 
       <div className="oracle-calls">
         <Odometer value={callsAt} className="calls-figure" />
@@ -40,8 +40,8 @@ export function OraclePanel() {
 
       <p className="oracle-note">
         {sealed
-          ? 'encrypt-then-MAC is on. the tag is checked first and fails before decryption, so every reply is the same.'
-          : 'this oracle answers about a message the app encrypted itself. there is no network, so there is no other target to reach.'}
+          ? 'Encrypt-then-MAC is on. The tag is checked first and fails before decryption, so every reply is the same.'
+          : 'This oracle answers about a message the app encrypted itself. There is no network, so there is no other target to reach.'}
       </p>
     </aside>
   );

@@ -65,7 +65,7 @@ export function Message() {
         <Stat
           figure={<Odometer value={callsAt} />}
           label="oracle calls"
-          note="a 16-byte block is roughly 2,000. cheap, not magical."
+          note="A 16-byte block is roughly 2,000. Cheap, not magical."
         />
         <Stat
           figure={
@@ -81,7 +81,7 @@ export function Message() {
         <Stat
           figure={<span className="mono">{view.recovered.length}<span className="of">/{totalBytes}</span></span>}
           label="bytes recovered"
-          note="right to left, one padding value at a time."
+          note="Right to left, one padding value at a time."
         />
       </div>
 

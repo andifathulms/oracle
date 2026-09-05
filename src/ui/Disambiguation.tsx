@@ -25,11 +25,11 @@ export function DisambiguationBar() {
         <span className="disambig-dot" />
         <span className="disambig-term">disambiguation</span>
         <span className="disambig-detail">
-          the last byte double-checks itself before committing: a genuine 0x01, or a longer pad
+          The last byte double-checks itself before committing: a genuine 0x01, or a longer pad
           in disguise.
         </span>
         <span className="disambig-count label">
-          {caught === 0 ? 'none caught yet' : `${caught} caught so far`}
+          {caught === 0 ? 'None caught yet' : `${caught} caught so far`}
         </span>
       </div>
     );
@@ -44,8 +44,8 @@ export function DisambiguationBar() {
       <span className="disambig-term">disambiguation</span>
       <span className="disambig-detail">
         {genuine
-          ? 'byte 14 was perturbed and the padding still held. a genuine 0x01, so the byte commits.'
-          : 'byte 14 was perturbed and the padding broke. the hit was a longer pad, so the sweep resumes.'}
+          ? 'Byte 14 was perturbed and the padding still held. A genuine 0x01, so the byte commits.'
+          : 'Byte 14 was perturbed and the padding broke. The hit was a longer pad, so the sweep resumes.'}
       </span>
       {probe ? (
         <span className="disambig-probe mono" aria-hidden="true">

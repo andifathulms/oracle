@@ -37,7 +37,7 @@ export function Silence() {
         <Gate
           n="3"
           name="check the padding"
-          detail="the leak, when it is reached"
+          detail="The leak, when it is reached"
           state={on ? 'unreached' : 'leak'}
         />
       </ol>
@@ -46,8 +46,8 @@ export function Silence() {
         <span className={`silence-lamp ${on ? 'dead' : 'live'}`} aria-hidden="true" />
         <p className="silence-line">
           {on
-            ? 'the oracle now says the same thing to every question, so there is nothing to learn from it.'
-            : 'without a tag, an invalid padding and a valid one are distinguishable, and one bit is enough.'}
+            ? 'The oracle now says the same thing to every question, so there is nothing to learn from it.'
+            : 'Without a tag, an invalid padding and a valid one are distinguishable, and one bit is enough.'}
         </p>
       </div>
 

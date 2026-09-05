@@ -50,7 +50,7 @@ function Shell() {
             <Mark />
             <div className="brand-text">
               <span className="brand-name">Oracle</span>
-              <span className="brand-sub">recover a message from one bit of feedback</span>
+              <span className="brand-sub">Recover a message from one bit of feedback</span>
             </div>
           </div>
 
@@ -61,7 +61,7 @@ function Shell() {
               className={!bitflip ? 'on' : ''}
               onClick={() => setMode('recover')}
             >
-              recovery
+              Recovery
             </button>
             <button
               role="tab"
@@ -69,7 +69,7 @@ function Shell() {
               className={bitflip ? 'on' : ''}
               onClick={() => setMode('bitflip')}
             >
-              tampering
+              Tampering
             </button>
           </nav>
         </div>
@@ -83,8 +83,8 @@ function Shell() {
         <main className="page">
           <Section
             index="01"
-            title="the interrogation"
-            lede="the attacker holds only the ciphertext. every question is one crafted block; every answer is one bit. the intermediate row fills from the right as bytes are recovered."
+            title="The interrogation"
+            lede="The attacker holds only the ciphertext. Every question is one crafted block; every answer is one bit. The intermediate row fills from the right as bytes are recovered."
             wide
           >
             <div className="interrogation">
@@ -100,24 +100,24 @@ function Shell() {
 
           <Section
             index="02"
-            title="the resolution"
-            lede="two exclusive-ors turn an accepted guess into a byte of plaintext. nothing here uses the key."
+            title="The resolution"
+            lede="Two exclusive-ors turn an accepted guess into a byte of plaintext. Nothing here uses the key."
           >
             <XorResolve />
           </Section>
 
           <Section
             index="03"
-            title="the message"
-            lede="the plaintext accumulating, and the price in oracle calls."
+            title="The message"
+            lede="The plaintext accumulating, and the price in oracle calls."
           >
             <Message />
           </Section>
 
           <Section
             index="04"
-            title="the defences"
-            lede="one of these changes nothing about the attack. the other closes it completely."
+            title="The defences"
+            lede="One of these changes nothing about the attack. The other closes it completely."
           >
             <div className="defences">
               <CipherPanel />
@@ -125,7 +125,7 @@ function Shell() {
             </div>
           </Section>
 
-          <Section index="05" title="the record" lede="every recovered byte, as a table and as hex.">
+          <Section index="05" title="The record" lede="Every recovered byte, as a table and as hex.">
             <HexExport />
           </Section>
         </main>
@@ -138,7 +138,7 @@ function Shell() {
           seed <code>{config.seed}</code>
         </span>
         <span className="colophon-dot" aria-hidden="true">·</span>
-        <span>everything is synthetic and stays on this device. the app has no network code at all.</span>
+        <span>Everything is synthetic and stays on this device. The app has no network code at all.</span>
       </footer>
     </div>
   );
