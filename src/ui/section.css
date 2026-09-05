@@ -4,6 +4,21 @@
   gap: var(--s-3);
   position: relative;
 }
+
+/* Arrival: the head first, the body a beat behind. */
+.scene-head, .scene-body {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--d-scene) var(--ease-out),
+    transform var(--d-scene) var(--ease-out);
+}
+.scene.shown .scene-head { opacity: 1; transform: none; }
+.scene.shown .scene-body { opacity: 1; transform: none; transition-delay: 90ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-head, .scene-body { opacity: 1; transform: none; }
+}
 .scene-head {
   display: grid;
   grid-template-columns: 2.5rem 1fr auto;

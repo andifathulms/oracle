@@ -80,7 +80,7 @@ export function Transport() {
 
         <div className="t-group t-config">
           <button
-            className={config.cipher === 'toy' ? 'on' : ''}
+            className={`only-wide ${config.cipher === 'toy' ? 'on' : ''}`}
             aria-pressed={config.cipher === 'toy'}
             onClick={() => setCipher(config.cipher === 'toy' ? 'aes' : 'toy')}
             title="The cipher is not the weakness"
@@ -88,7 +88,7 @@ export function Transport() {
             {config.cipher === 'aes' ? 'AES-128' : 'toy cipher'}
           </button>
           <button
-            className={config.mac ? 'on sealed' : ''}
+            className={`only-wide ${config.mac ? 'on sealed' : ''}`}
             aria-pressed={config.mac}
             onClick={() => setMac(!config.mac)}
           >

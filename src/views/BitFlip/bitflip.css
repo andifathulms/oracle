@@ -88,6 +88,8 @@
 .bf-caveat { font-size: var(--t-small); color: var(--ink-faint); line-height: 1.55; max-width: 68ch; }
 
 @media (max-width: 720px) {
-  .bf-grid { --label-w: 82px; --colgap: 3px; }
+  .bf-grid { --label-w: 78px; --colgap: 4px; --cellw: 28px; overflow-x: auto; scrollbar-width: thin; }
+  .bf-row { grid-template-columns: var(--label-w) max-content; }
   .bf-label { font-size: 9px; }
+  .bf-cell { min-height: 28px; }
 }

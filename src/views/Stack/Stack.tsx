@@ -116,7 +116,7 @@ export function Stack() {
           );
         })}
 
-        <span className="row-label addr-label label" aria-hidden="true">byte</span>
+        <span className="addr-label label" aria-hidden="true">byte</span>
         {cols.map((i) => (
           <div key={`a${i}`} className={`addr ${active === i ? 'on' : ''}`} aria-hidden="true">
             {i}

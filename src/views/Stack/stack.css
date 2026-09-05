@@ -60,7 +60,7 @@
 .row-note { color: var(--ink-ghost); font-size: 9.5px; line-height: 1.25; max-width: 104px; }
 .row-label.crafted .row-name { color: color-mix(in srgb, var(--crafted) 80%, var(--ink-mid)); }
 .row-label.gold .row-name { color: color-mix(in srgb, var(--recovered) 60%, var(--ink-mid)); }
-.addr-label { align-self: center; justify-self: end; padding-right: 4px; color: var(--ink-ghost); }
+.addr-label { justify-self: end; padding-right: 4px; color: var(--ink-ghost); }
 
 /* ---- Cells ---- */
 .cell {
@@ -172,7 +172,25 @@
 .derive-char strong { color: var(--recovered-bright); }
 
 @media (max-width: 900px) {
-  .stack-grid { --label-w: 60px; --colgap: 4px; }
-  .cell { height: var(--cell-mobile); font-size: 15px; }
+  .stack-grid { --label-w: 74px; --colgap: 5px; }
   .row-note { display: none; }
+}
+
+/* Below the point where sixteen 30px cells no longer fit, the stack keeps its
+   module and scrolls instead of shrinking to illegibility (DESIGN.md §4.5).
+   The three rows stay vertically aligned because they share one grid. */
+@media (max-width: 720px) {
+  .stack-grid {
+    --label-w: 62px;
+    --colgap: 4px;
+    --cellw: var(--cell-mobile);
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+  .cell { height: var(--cell-mobile); font-size: 14px; }
+  .cell.plain.known { font-size: 15px; }
+  .derive { position: fixed; left: var(--s-2); right: var(--s-2); bottom: 96px; transform: none; max-width: none; }
+  .cell.known:hover .derive, .cell.known:focus-visible .derive { transform: none; }
 }

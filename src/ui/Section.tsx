@@ -1,6 +1,7 @@
 // A scene: numbered rule, title, and one line of orientation. The number is
 // the spine of the reading order — the app is a sequence, not a dashboard.
 import type { ReactNode } from 'react';
+import { useReveal } from './useReveal';
 import './section.css';
 
 export function Section({
@@ -18,8 +19,13 @@ export function Section({
   wide?: boolean;
   children: ReactNode;
 }) {
+  const { ref, shown } = useReveal<HTMLElement>();
   return (
-    <section className={`scene ${wide ? 'wide' : ''}`} aria-label={title}>
+    <section
+      ref={ref}
+      className={`scene ${wide ? 'wide' : ''} ${shown ? 'shown' : ''}`}
+      aria-label={title}
+    >
       <div className="scene-head">
         <span className="scene-index label">{index}</span>
         <div className="scene-titles">

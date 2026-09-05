@@ -84,7 +84,16 @@
   .t-config { margin-left: 0; }
 }
 @media (max-width: 640px) {
-  .transport-inner { padding: 10px var(--s-2) 12px; gap: var(--s-2); }
-  .t-readout { gap: var(--s-1); padding: 6px 10px; }
+  .transport-inner { padding: 8px var(--s-2) 10px; gap: 10px; }
+  .transport-inner button { padding: 7px 10px; }
+  .t-play { flex: 1 1 100%; }
+  .t-play button { flex: 1; }
+  .t-play .play { min-width: 0; }
+  .t-speed { flex: 1 1 auto; max-width: none; }
+  /* The cipher and MAC switches live in their own panels; the bar does not
+     need to carry a second copy of them on a phone. */
+  .transport .only-wide { display: none; }
+  .t-readout { gap: var(--s-1); padding: 5px 10px; }
   .readout { min-width: 0; }
+  .readout-v { font-size: var(--t-small); }
 }

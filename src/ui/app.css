@@ -64,7 +64,7 @@
   max-width: var(--max-w);
   width: 100%;
   margin: 0 auto;
-  padding: var(--s-5) var(--s-3) calc(var(--s-6) + 84px);
+  padding: var(--s-5) var(--s-3) var(--s-5);
   display: flex;
   flex-direction: column;
   gap: var(--s-6);
@@ -88,7 +88,7 @@
   max-width: var(--max-w);
   width: 100%;
   margin: 0 auto;
-  padding: var(--s-3) var(--s-3) calc(var(--s-4) + 84px);
+  padding: var(--s-3) var(--s-3) calc(var(--s-3) + 108px);
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
