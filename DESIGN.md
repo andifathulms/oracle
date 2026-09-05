@@ -152,6 +152,8 @@ Base 16 px. One ramp, nine rungs, each with a job. All sizes are fluid between a
 | `--t-data` | 13 | Plex Mono | Addresses, secondary hex, tables |
 | `--t-small` | 12 | Plex Mono | Labels and legends, never sentences |
 | `--t-micro` | 10.5 | Plex Mono | The smallest labels |
+| `--t-nano` | 9.5 | Plex Mono | Derivation-popover labels and row notes only |
+| `--t-byte-mobile` | 14 / 15 | Plex Mono | The byte cells at phone widths, where the module is 30 px |
 
 The rule that keeps this one scale rather than a pile of sizes: **prose is
 `--t-body` and nothing else.** `--t-small` and below are for labels and data.

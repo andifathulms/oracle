@@ -72,7 +72,13 @@
   --t-body: 16px;                                   /* ALL running prose */
   --t-data: 13px;                                   /* addresses, secondary hex */
   --t-small: 12px;                                  /* labels and legends, not prose */
-  --t-micro: 10.5px;
+  --t-micro: 10.5px;                                /* the smallest labels */
+  --t-nano: 9.5px;                                  /* derivation popover labels only */
+  /* The byte cells shrink on a phone: the module is 30px there, so --t-byte's
+     17px floor no longer fits inside it. These are the same rung, measured for
+     the smaller cell. */
+  --t-byte-mobile: 14px;
+  --t-byte-mobile-char: 15px;                       /* the plaintext character reads a step larger */
 
   --track-label: 0.06em;   /* the only tracking, on micro labels */
   --track-figure: -0.02em;

@@ -90,6 +90,6 @@
 @media (max-width: 720px) {
   .bf-grid { --label-w: 78px; --colgap: 4px; --cellw: 28px; overflow-x: auto; scrollbar-width: thin; }
   .bf-row { grid-template-columns: var(--label-w) max-content; }
-  .bf-label { font-size: 9px; }
+  .bf-label { font-size: var(--t-nano); }
   .bf-cell { min-height: 28px; }
 }
