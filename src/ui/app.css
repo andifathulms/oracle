@@ -74,9 +74,9 @@
    thinness of the channel between them is the point (DESIGN.md §4.1). */
 .interrogation {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-columns: minmax(0, 1fr) 108px 264px;
   gap: var(--s-4);
-  align-items: start;
+  align-items: stretch;
 }
 .workspace { display: flex; flex-direction: column; gap: var(--s-3); min-width: 0; }
 
@@ -100,7 +100,7 @@
 .colophon-dot { color: var(--ink-ghost); }
 
 @media (max-width: 1040px) {
-  .interrogation { grid-template-columns: minmax(0, 1fr) 220px; gap: var(--s-3); }
+  .interrogation { grid-template-columns: minmax(0, 1fr) 60px 220px; gap: var(--s-2); }
 }
 @media (max-width: 860px) {
   /* The oracle moves above the stack on narrow screens (DESIGN.md §4.5). */

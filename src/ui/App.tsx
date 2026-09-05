@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { StoreProvider, useStore } from '../state/store';
 import { Stack } from '../views/Stack/Stack';
 import { OraclePanel } from '../views/Oracle/OraclePanel';
+import { Channel } from '../views/Channel/Channel';
 import { XorResolve } from '../views/XorResolve/XorResolve';
 import { Message } from '../views/Message/Message';
 import { CipherPanel } from '../views/CipherPanel/CipherPanel';
@@ -89,6 +90,7 @@ function Shell() {
                 <Stack />
                 <DisambiguationBar />
               </div>
+              <Channel />
               <OraclePanel />
             </div>
           </Section>

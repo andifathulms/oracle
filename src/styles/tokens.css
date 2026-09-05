@@ -30,7 +30,7 @@
   --valid-bright: #74d7a8;
   --valid-glow: rgba(79, 178, 134, 0.55);
   --invalid: #313947;       /* a no is almost nothing */
-  --invalid-ink: #6c7686;
+  --invalid-ink: #59626f;
 
   /* ---- The recovered (gold) and the crafted (blue) ---- */
   --recovered: #c8a24a;

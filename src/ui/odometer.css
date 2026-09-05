@@ -1,0 +1,28 @@
+.odo {
+  display: inline-flex;
+  align-items: stretch;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: var(--track-figure);
+}
+.odo-slot {
+  display: block;
+  overflow: hidden;
+  height: 1em;
+  width: 0.62em;
+}
+.odo-reel {
+  display: flex;
+  flex-direction: column;
+  height: 1000%;
+  transition: transform 320ms var(--ease-commit);
+  will-change: transform;
+}
+.odo-digit {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.odo-sep { display: block; width: 0.34em; text-align: center; opacity: 0.55; }
