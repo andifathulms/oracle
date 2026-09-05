@@ -86,6 +86,10 @@ The oracle's reply, and the most disciplined colour in the app.
 | `--valid` | `#4FB286` | Padding valid. The bit is yes. |
 | `--invalid` | `#3A424C` | Padding invalid. Barely above the surface — a no is almost nothing. |
 
+The lamp's *word* is the accessible equivalent for its colour, so it is the one part of a "no"
+that cannot also be dim: it holds 4.5:1 while the housing stays near-black. The asymmetry lives
+in the housing, not in the text.
+
 `--invalid` is deliberately dim, because a rejection *is* almost nothing — one failed guess
 among hundreds. `--valid` is the only bright event in a sweep, and when it appears after 200
 rejections it should feel like the single thing that happened. The whole sweep is 255 near-silent

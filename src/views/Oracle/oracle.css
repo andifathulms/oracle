@@ -84,8 +84,12 @@
   letter-spacing: var(--track-figure);
   color: #0c1013;
 }
-.lamp.invalid .lamp-word { color: #4d5663; }
-.lamp.idle .lamp-word { color: #39414c; }
+/* The word is the accessible equivalent for the lamp's colour, so it is the one
+   part of a "no" that cannot also be dim (DESIGN.md §8's 4.5:1 floor). The
+   housing above still carries the "a no is almost nothing" weighting; the
+   asymmetry lives there, not in the text. */
+.lamp.invalid .lamp-word { color: #8d9aab; }   /* 6.35 : 1 on the invalid housing */
+.lamp.idle .lamp-word { color: var(--ink-ghost); }  /* 5.13 : 1 */
 
 /* A hairline ring that flares with a valid reply. */
 .lamp-ring {
