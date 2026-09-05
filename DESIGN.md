@@ -137,16 +137,28 @@ voice would distract from a screen whose whole job is to be believed.
 
 ### 3.1 Scale
 
-Base 15 px.
+Base 16 px. One ramp, nine rungs, each with a job. All sizes are fluid between a
+380 px and a 1400 px viewport.
 
-| Token | Size / line-height | Face | Use |
+| Token | Size | Face | Use |
 |---|---|---|---|
-| `--t-byte` | 22 / 1.0, 500 | Plex Mono | The byte cells in the stack |
-| `--t-figure` | 28 / 1.05, 600 | Plex Mono | The oracle-call counter, recovered-byte count |
-| `--t-h2` | 18 / 1.3, 600 | Plex Mono | Panel headings |
-| `--t-body` | 15 / 1.6, 400 | Plex Sans | Explanation. Max 66 characters. |
-| `--t-data` | 13 / 1.45, 400 | Plex Mono | Addresses, secondary hex, tables |
-| `--t-small` | 12 / 1.35, 400 | Plex Mono | Labels, legend |
+| `--t-display` | 32 → 56 | Plex Mono | The overture headline. Once per page. |
+| `--t-figure` | 24 → 34 | Plex Mono | The oracle-call counter, recovered-byte count |
+| `--t-h1` | 19 → 24 | Plex Mono | Scene titles |
+| `--t-lede` | 17 → 20 | Plex Sans | The overture's supporting line |
+| `--t-byte` | 17 → 22 | Plex Mono | The byte cells in the stack |
+| `--t-h2` | 16 → 19 | Plex Mono | Panel headings, diagram labels |
+| `--t-body` | 16 | Plex Sans | **All** running prose |
+| `--t-data` | 13 | Plex Mono | Addresses, secondary hex, tables |
+| `--t-small` | 12 | Plex Mono | Labels and legends, never sentences |
+| `--t-micro` | 10.5 | Plex Mono | The smallest labels |
+
+The rule that keeps this one scale rather than a pile of sizes: **prose is
+`--t-body` and nothing else.** `--t-small` and below are for labels and data.
+Every scene lede, panel note and caveat was previously set at `--t-small`, which
+put the copy carrying all of the app's comprehension two rungs below the labels
+it was explaining. It is now the second-largest thing in a panel after the
+values, which is the correct order.
 
 `font-variant-numeric: tabular-nums`. The call counter spins and must not shift width.
 
