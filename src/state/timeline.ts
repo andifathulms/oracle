@@ -153,6 +153,34 @@ export interface ViewState {
   recovered: RecoveredByte[]; // committed bytes so far
   lastCommit: RecoveredByte | null;
   candidate: number | null;
+  // Every candidate already put to the oracle for the byte currently under
+  // attack, in the order it was tried, and the one that was finally accepted.
+  // Derived by walking back over the trace, so it costs nothing to scrub.
+  tried: number[];
+  accepted: number | null;
+}
+
+// Walk back from `at` collecting the candidates tried for the byte currently
+// under attack. A resumed sweep after a caught false positive is part of the
+// same run and is included, which is the honest picture.
+function triedFor(timeline: Timeline, at: number): { tried: number[]; accepted: number | null } {
+  const here = timeline.events[at];
+  if (!here) return { tried: [], accepted: null };
+  const block = here.blockIndex;
+  const index = here.targetIndex;
+  const tried: number[] = [];
+  let accepted: number | null = null;
+  for (let i = 0; i <= at; i++) {
+    const ev = timeline.events[i];
+    if (ev.blockIndex !== block || ev.targetIndex !== index) continue;
+    if (ev.kind === 'sweep') {
+      tried.push(ev.candidate);
+      if (ev.valid) accepted = ev.candidate;
+    } else if (ev.kind === 'disambiguate' && !ev.stillValid) {
+      accepted = null;
+    }
+  }
+  return { tried, accepted };
 }
 
 export function selectView(timeline: Timeline, index: number): ViewState {
@@ -169,6 +197,8 @@ export function selectView(timeline: Timeline, index: number): ViewState {
       recovered: [],
       lastCommit: null,
       candidate: null,
+      tried: [],
+      accepted: null,
     };
   }
   const ev = timeline.events[clamped];
@@ -215,6 +245,7 @@ export function selectView(timeline: Timeline, index: number): ViewState {
     recovered,
     lastCommit,
     candidate,
+    ...triedFor(timeline, clamped),
   };
 }
 

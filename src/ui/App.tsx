@@ -3,6 +3,7 @@ import { StoreProvider, useStore } from '../state/store';
 import { Stack } from '../views/Stack/Stack';
 import { OraclePanel } from '../views/Oracle/OraclePanel';
 import { Channel } from '../views/Channel/Channel';
+import { CandidateField } from '../views/Sweep/CandidateField';
 import { XorResolve } from '../views/XorResolve/XorResolve';
 import { Message } from '../views/Message/Message';
 import { CipherPanel } from '../views/CipherPanel/CipherPanel';
@@ -89,6 +90,7 @@ function Shell() {
               <div className="workspace">
                 <Stack />
                 <DisambiguationBar />
+                <CandidateField />
               </div>
               <Channel />
               <OraclePanel />

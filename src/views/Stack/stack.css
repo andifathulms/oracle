@@ -1,44 +1,72 @@
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap);
-}
+.stack { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
+
 .stack-legend {
   display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: var(--t-small);
-  color: var(--ink-mid);
-}
-.stack-dir { color: var(--ink-faint); }
-
-.stack-row {
-  display: grid;
-  grid-template-columns: 84px 1fr;
   align-items: center;
+  justify-content: space-between;
   gap: var(--s-2);
+  flex-wrap: wrap;
 }
+.block-chips { display: flex; gap: 4px; }
+.chip { padding: 4px 10px; font-size: var(--t-micro); letter-spacing: var(--track-label); }
+.chip.done { color: var(--recovered); border-color: color-mix(in srgb, var(--recovered) 35%, var(--rule)); }
+.chip.on { color: var(--crafted-bright); border-color: var(--crafted); box-shadow: 0 0 0 1px var(--crafted-glow); }
+.stack-dir { color: var(--ink-ghost); }
+
+/* One grid for all four rows, so the byte columns are the app's spine and
+   nothing can drift out of alignment (DESIGN.md §1). */
+.stack-grid {
+  position: relative;
+  display: grid;
+  --label-w: 108px;
+  --colgap: 6px;
+  /* Cells hold their 40px module until the container cannot afford it, then
+     shrink together. The columns never wrap and never scroll away. */
+  --cellw: min(var(--cell), (100% - var(--label-w) - 16 * var(--colgap)) / 16);
+  grid-template-columns: var(--label-w) repeat(16, var(--cellw));
+  grid-auto-rows: auto;
+  gap: 6px var(--colgap);
+  align-items: center;
+  padding: var(--s-2) 0;
+}
+
+/* The beam marks the column under attack across every row. It is positioned
+   absolutely so it cannot disturb the grid's auto-placement — the byte columns
+   are the spine and nothing may push them. */
+.beam {
+  position: absolute;
+  top: 8px;
+  height: calc(3 * var(--cellw) + 2 * 6px + 16px);
+  width: calc(var(--cellw) + 8px);
+  margin-left: -4px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--crafted) 16%, transparent),
+    color-mix(in srgb, var(--crafted) 5%, transparent));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--crafted) 30%, transparent);
+  pointer-events: none;
+  transition: opacity 120ms linear;
+}
+
 .row-label {
-  font-family: var(--font-mono);
-  font-size: var(--t-small);
-  color: var(--ink-mid);
-  text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
+  text-align: right;
+  gap: 1px;
+  padding-right: 4px;
 }
-.row-hint { color: var(--crafted); font-size: 11px; }
+.row-name { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink-mid); }
+.row-note { color: var(--ink-ghost); font-size: 9.5px; line-height: 1.25; max-width: 104px; }
+.row-label.crafted .row-name { color: color-mix(in srgb, var(--crafted) 80%, var(--ink-mid)); }
+.row-label.gold .row-name { color: color-mix(in srgb, var(--recovered) 60%, var(--ink-mid)); }
+.addr-label { align-self: center; justify-self: end; padding-right: 4px; color: var(--ink-ghost); }
 
-.row-cells {
-  display: grid;
-  grid-template-columns: repeat(16, var(--cell));
-  gap: 4px;
-}
-
+/* ---- Cells ---- */
 .cell {
-  width: var(--cell);
+  position: relative;
   height: var(--cell);
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,64 +74,105 @@
   font-size: var(--t-byte);
   font-weight: 500;
   border-radius: var(--radius);
-  background: var(--panel-raised);
-  border: 1px solid transparent;
-  transition: transform 120ms linear;
+  background: linear-gradient(180deg, var(--panel-raised), var(--panel));
+  border: 1px solid var(--rule);
+  padding: 0;
+  transition: transform 120ms var(--ease-standard), border-color 120ms linear;
 }
 
-.cell.crafted { color: var(--crafted); }
-.cell.crafted.blank { color: var(--ink-faint); }
+.cell.crafted { color: var(--crafted-bright); border-color: color-mix(in srgb, var(--crafted) 22%, var(--rule)); }
+.cell.crafted.blank { color: var(--ink-ghost); border-color: var(--rule); }
 
-/* Void cells are genuine holes — darker than the surface (DESIGN.md §0). */
+/* Void cells are genuine holes — below the surface, not a dimmed value. */
 .cell.void {
   background: var(--void);
+  border-color: transparent;
+  box-shadow: var(--shadow-void);
   color: transparent;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
-.cell.intermediate.known,
-.cell.plain.known {
+
+.cell.known {
   color: var(--recovered);
-  background: var(--panel-raised);
+  border-color: color-mix(in srgb, var(--recovered) 24%, var(--rule));
+  cursor: help;
 }
-.cell.plain.known { font-weight: 600; }
-
-/* A column under active attack is marked by a subtle raise, not a colour. */
-.cell.active {
-  transform: translateY(-4px);
-  border-color: var(--rule);
-}
-
-/* Resolve-from-void: the value is simply there (DESIGN.md §6.3). Not a fade. */
-@keyframes resolve {
-  0% { transform: scale(0.86); }
-  100% { transform: scale(1); }
-}
-.cell.arriving {
-  animation: resolve 260ms var(--ease-commit);
+.cell.plain.known { color: var(--recovered-bright); font-weight: 600; }
+.cell.known:hover, .cell.known:focus-visible {
+  border-color: var(--recovered);
+  z-index: 3;
 }
 
-.stack-addr {
-  display: grid;
-  grid-template-columns: 84px 1fr;
+/* The column under active attack is raised, not recoloured. */
+.cell.active { transform: translateY(-4px); }
+.cell.crafted.active {
+  border-color: var(--crafted);
+  box-shadow: 0 0 0 1px var(--crafted-glow), 0 6px 18px -8px var(--crafted-glow);
 }
-.stack-addr::before { content: ''; }
-.stack-addr {
-  grid-template-columns: repeat(16, var(--cell));
-  gap: 4px;
-  margin-left: calc(84px + var(--s-2));
+
+/* Resolve-from-void: the value is simply there, having been discovered
+   (DESIGN.md §6.3). Deliberately not a fade. */
+.cell.arriving { animation: resolve-from-void var(--d-commit) var(--ease-commit); }
+.cell.arriving::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius);
+  border: 1px solid var(--recovered-bright);
+  animation: arrive-ring var(--d-commit) var(--ease-out) forwards;
+  pointer-events: none;
 }
+@keyframes arrive-ring {
+  0%   { opacity: 1; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+
 .addr {
-  width: var(--cell);
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-faint);
+  font-size: var(--t-micro);
+  color: var(--ink-ghost);
+  font-variant-numeric: tabular-nums;
+  transition: color 120ms linear;
 }
+.addr.on { color: var(--crafted-bright); }
 
-@media (max-width: 720px) {
-  .row-cells, .stack-addr { grid-template-columns: repeat(16, var(--cell-mobile)); }
-  .cell { width: var(--cell-mobile); height: var(--cell-mobile); font-size: 17px; }
-  .addr { width: var(--cell-mobile); }
-  .stack-row { grid-template-columns: 64px 1fr; }
-  .row-cells { overflow-x: auto; }
+/* ---- The derivation popover (DESIGN.md §5.1) ---- */
+.derive {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: max-content;
+  max-width: 320px;
+  padding: 10px 12px;
+  background: var(--panel-high);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.95);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms var(--ease-standard), transform 120ms var(--ease-standard);
+  text-align: left;
+}
+.cell.known:hover .derive, .cell.known:focus-visible .derive {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.derive-head { color: var(--ink-faint); }
+.derive-line { display: flex; align-items: baseline; gap: 5px; font-family: var(--font-mono); font-size: var(--t-data); color: var(--crafted-bright); }
+.derive-line em { font-style: normal; font-weight: 600; }
+.derive-line em.gold { color: var(--recovered-bright); }
+.derive-line .dl { font-size: 9.5px; color: var(--ink-ghost); letter-spacing: var(--track-label); }
+.derive-line .op { color: var(--ink-faint); padding: 0 2px; }
+.derive-char { font-family: var(--font-sans); font-size: var(--t-small); color: var(--ink-mid); }
+.derive-char strong { color: var(--recovered-bright); }
+
+@media (max-width: 900px) {
+  .stack-grid { --label-w: 60px; --colgap: 4px; }
+  .cell { height: var(--cell-mobile); font-size: 15px; }
+  .row-note { display: none; }
 }
