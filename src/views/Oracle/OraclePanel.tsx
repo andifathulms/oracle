@@ -23,14 +23,15 @@ export function OraclePanel() {
         <span className="oracle-badge label">{sealed ? 'sealed' : 'padding check'}</span>
       </div>
 
-      {/* The lamp: a bezel, a glass, and behind it the one bit. */}
+      {/* The lamp: a bezel, a glass, and behind it the one bit.
+
+          Not a live region. It used to be role=status keyed to remount on every
+          oracle call, which at ~600 calls a second buried a screen reader. The
+          word is still real text, so it can be read on demand; the app's single
+          live region is <Announcer />, which speaks meaning rather than every
+          individual bit. */}
       <div className="lamp-bezel">
-        <div
-          className={`lamp ${view.lamp}`}
-          role="status"
-          aria-live="polite"
-          key={view.eventIndex}
-        >
+        <div className={`lamp ${view.lamp}`}>
           <span className="lamp-glass" aria-hidden="true" />
           <span className="lamp-word">{word}</span>
         </div>

@@ -10,6 +10,7 @@ import { CipherPanel } from '../views/CipherPanel/CipherPanel';
 import { Silence } from '../views/Silence/Silence';
 import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
+import { Announcer } from './Announcer';
 import { Overture } from './Overture';
 import { Transport } from './Transport';
 import { DisambiguationBar } from './Disambiguation';
@@ -55,6 +56,7 @@ function Shell() {
 
   return (
     <div className="shell">
+      <Announcer />
       <header className="masthead">
         <div className="masthead-inner">
           <div className="brand">
