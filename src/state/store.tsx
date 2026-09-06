@@ -71,6 +71,11 @@ function stepsPerSecond(speed: number): number {
 // on what else is repainting alongside it.
 const FLASH_SAFE_STEPS_PER_SECOND = 3 * 128;
 
+// Under reduced motion the loop advances between meaningful events rather than
+// through every rejection, so this is events per second, not steps: slow enough
+// to read each state as it lands.
+const REDUCED_EVENTS_PER_SECOND = 2;
+
 export function isRapid(speed: number, playing: boolean): boolean {
   return playing && stepsPerSecond(speed) > FLASH_SAFE_STEPS_PER_SECOND;
 }
@@ -147,12 +152,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       if (lastT.current == null) lastT.current = t;
       const dt = (t - lastT.current) / 1000;
       lastT.current = t;
-      acc.current += dt * stepsPerSecond(config.speed);
+      // Under prefers-reduced-motion the sweep does not cycle. DESIGN.md §6.6:
+      // "the sweep becomes a stepper with no cycling animation — each step is
+      // an instant state." Playback advances between meaningful events instead
+      // of animating through 255 rejections, at a fixed readable cadence that
+      // ignores the speed scrubber. That is the same collapse the fast-forward
+      // button performs, which DESIGN.md §6 already defines as keeping the
+      // disambiguation and the resolution while dropping the drudgery.
+      //
+      // reducedMotion was computed and passed to two components for entrance
+      // effects, but the loop that drives all of the app's motion never
+      // consulted it.
+      acc.current += dt * (reducedMotion ? REDUCED_EVENTS_PER_SECOND : stepsPerSecond(config.speed));
       if (acc.current >= 1) {
         const advance = Math.floor(acc.current);
         acc.current -= advance;
         setIndex((i) => {
-          const next = Math.min(i + advance, timeline.events.length - 1);
+          let next = i;
+          if (reducedMotion) {
+            for (let n = 0; n < advance; n++) next = collapseSweep(timeline, next);
+          } else {
+            next = Math.min(i + advance, timeline.events.length - 1);
+          }
           if (next >= timeline.events.length - 1) setPlaying(false);
           return next;
         });
@@ -161,7 +182,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [playing, config.speed, timeline]);
+  }, [playing, config.speed, timeline, reducedMotion]);
 
   const view = useMemo(() => selectView(timeline, index), [timeline, index]);
   const callsAt = useMemo(() => callsUpTo(timeline, index), [timeline, index]);
