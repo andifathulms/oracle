@@ -50,8 +50,8 @@ export function Transport() {
             {playing ? 'pause' : 'sweep'}
           </button>
           <button onClick={step} aria-label="Single step, one oracle call" title="→">step</button>
-          <button onClick={fastForward} aria-label="Fast-forward past the rejections" title="F">skip</button>
-          <button onClick={restart} aria-label="Restart the recovery" title="R">restart</button>
+          <button onClick={fastForward} aria-label="Fast-forward past the rejections">skip</button>
+          <button onClick={restart} aria-label="Restart the recovery">restart</button>
           <LinkToMoment />
         </div>
 

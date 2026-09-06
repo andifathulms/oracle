@@ -25,21 +25,31 @@ export function App() {
 }
 
 function Shell() {
-  const { config, setMode, toggle, step, fastForward, restart } = useStore();
+  const { config, setMode, toggle, step } = useStore();
 
-  // Keyboard: space toggles the sweep, arrows step, F fast-forwards, R restarts.
+  // Page-level keys: space toggles the sweep, right arrow steps.
+  //
+  // They fire only when nothing focusable holds focus. The old guard excluded
+  // INPUT and TEXTAREA by tagName but not BUTTON, so Space on any of the app's
+  // buttons was preventDefault()ed and played the sweep instead of pressing the
+  // button under the cursor — every button in the app was Enter-only, and Space
+  // did something unrelated (WCAG 2.1.1).
+  //
+  // The bare `f` and `r` shortcuts are gone. Single-character shortcuts have to
+  // be disableable, remappable, or focus-scoped (WCAG 2.1.4), and speech input
+  // fires them constantly by accident. Nothing is lost: skip and restart are
+  // buttons in the transport, reachable by Tab like everything else.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || e.metaKey || e.ctrlKey) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = e.target as HTMLElement | null;
+      if (el?.closest('button, input, textarea, select, a[href], [contenteditable], [tabindex]')) return;
       if (e.key === ' ') { e.preventDefault(); toggle(); }
       else if (e.key === 'ArrowRight') { e.preventDefault(); step(); }
-      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); fastForward(); }
-      else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); restart(); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [toggle, step, fastForward, restart]);
+  }, [toggle, step]);
 
   const bitflip = config.mode === 'bitflip';
 
