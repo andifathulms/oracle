@@ -94,10 +94,14 @@
 /* The readout drops to its own row before the config buttons are forced to
    wrap alone, which left them stranded in the corner. */
 @media (max-width: 1240px) {
+  /* The readout takes its own row, so the page must reserve one more. */
+  :root { --transport-h: 152px; }
   .t-readout { order: 5; width: 100%; justify-content: space-between; }
   .t-config { margin-left: auto; }
 }
 @media (max-width: 640px) {
+  /* And here the play group wraps to two rows on top of that. */
+  :root { --transport-h: 212px; }
   .transport-inner { padding: 8px var(--s-2) 10px; gap: 10px; }
   .transport-inner button { padding: 7px 10px; }
   /* Five buttons no longer divide 380px. Usable width there is about 348px,

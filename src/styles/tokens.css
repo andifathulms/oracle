@@ -94,6 +94,14 @@
   --s-5: 64px;
   --s-6: 96px;
   --max-w: 84rem;
+
+  /* The space the fixed transport occupies, reserved by the page above it. It
+     is a token because the bar gains rows at the same breakpoints the page has
+     to widen its reserve: one row of controls at desktop, plus the readout at
+     1240px, plus the wrapped play group at 640px. Keep these two in step; a
+     stale value hides the colophon behind the bar rather than merely crowding
+     it. */
+  --transport-h: 108px;
   --radius: 3px;
   --radius-lg: 6px;
   --radius-panel: 8px;
