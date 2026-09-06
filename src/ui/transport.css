@@ -100,9 +100,14 @@
 @media (max-width: 640px) {
   .transport-inner { padding: 8px var(--s-2) 10px; gap: 10px; }
   .transport-inner button { padding: 7px 10px; }
-  .t-play { flex: 1 1 100%; }
-  .t-play button { flex: 1; }
-  .t-play .play { min-width: 0; }
+  /* Five buttons no longer divide 380px. Usable width there is about 348px,
+     and four 6px gaps leave ~65px each, under what "restart" needs at 12px
+     mono plus its padding. The group wraps instead of overflowing: sweep takes
+     the full first line as the primary action, the four secondary controls
+     share the second. No control is removed to make room. */
+  .t-play { flex: 1 1 100%; flex-wrap: wrap; }
+  .t-play .play { flex: 1 1 100%; min-width: 0; }
+  .t-play button:not(.play) { flex: 1 1 0; min-width: 0; }
   .link-said { display: none; }
   .t-speed { flex: 1 1 auto; max-width: none; }
   /* The cipher and MAC switches live in their own panels; the bar does not
