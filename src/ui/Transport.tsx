@@ -6,7 +6,7 @@
 // (CLAUDE.md §6).
 import { useState, useCallback } from 'react';
 import { useStore } from '../state/store';
-import { hex } from './format';
+import { hex, VOID_GLYPH, VOID_SPOKEN } from './format';
 import './transport.css';
 
 export function Transport() {
@@ -73,10 +73,10 @@ export function Transport() {
             reads correctly without a name on the container. */}
         <dl className="t-readout">
           <Readout k="block" v={`${view.currentBlock + 1}/${recovery.blocks.length}`} />
-          <Readout k="byte" v={view.activeIndex == null ? '··' : String(view.activeIndex)} />
+          <Readout k="byte" v={view.activeIndex == null ? null : String(view.activeIndex)} />
           <Readout
             k="guess"
-            v={view.candidate == null ? '··' : hex(view.candidate)}
+            v={view.candidate == null ? null : hex(view.candidate)}
             tone="crafted"
           />
           <Readout k="found" v={`${done}/${totalBytes}`} tone="gold" />
@@ -106,11 +106,23 @@ export function Transport() {
   );
 }
 
-function Readout({ k, v, tone }: { k: string; v: string; tone?: string }) {
+// v of null means "no value yet". On screen that is the void glyph, matching
+// the void cells in the stack; aloud it is a word, because "··" is announced as
+// "dot dot" or dropped entirely.
+function Readout({ k, v, tone }: { k: string; v: string | null; tone?: string }) {
   return (
     <div className={`readout ${tone ?? ''}`}>
       <dt className="label">{k}</dt>
-      <dd className="readout-v mono">{v}</dd>
+      <dd className="readout-v mono">
+        {v === null ? (
+          <>
+            <span aria-hidden="true">{VOID_GLYPH}</span>
+            <span className="visually-hidden">{VOID_SPOKEN}</span>
+          </>
+        ) : (
+          v
+        )}
+      </dd>
     </div>
   );
 }

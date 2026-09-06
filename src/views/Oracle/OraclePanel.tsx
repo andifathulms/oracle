@@ -3,6 +3,7 @@
 // guarantee that the attack works from one bit.
 import { useStore } from '../../state/store';
 import { Odometer } from '../../ui/Odometer';
+import { VOID_GLYPH } from '../../ui/format';
 import './oracle.css';
 
 export function OraclePanel() {
@@ -21,7 +22,7 @@ export function OraclePanel() {
   // at 600 steps a second nobody resolves them individually anyway.
   const word = rapid
     ? 'sweeping'
-    : view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : '··';
+    : view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : null;
 
   // No aria-label on the <aside>: it repeated the <h3> immediately inside it.
   return (
@@ -41,7 +42,14 @@ export function OraclePanel() {
       <div className="lamp-bezel">
         <div className={`lamp ${rapid ? 'rapid' : view.lamp}`}>
           <span className="lamp-glass" aria-hidden="true" />
-          <span className="lamp-word">{word}</span>
+          <span className="lamp-word">
+            {word ?? (
+              <>
+                <span aria-hidden="true">{VOID_GLYPH}</span>
+                <span className="visually-hidden">no question asked yet</span>
+              </>
+            )}
+          </span>
         </div>
         <div className="lamp-ring" aria-hidden="true" />
       </div>
