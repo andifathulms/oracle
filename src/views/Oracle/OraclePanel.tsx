@@ -23,8 +23,9 @@ export function OraclePanel() {
     ? 'sweeping'
     : view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : '··';
 
+  // No aria-label on the <aside>: it repeated the <h3> immediately inside it.
   return (
-    <aside className={`oracle panel ${sealed ? 'sealed' : ''}`} aria-label="The oracle">
+    <aside className={`oracle panel ${sealed ? 'sealed' : ''}`}>
       <div className="oracle-head">
         <h3 className="oracle-title">The oracle</h3>
         <span className="oracle-badge label">{sealed ? 'sealed' : 'padding check'}</span>

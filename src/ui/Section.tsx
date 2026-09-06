@@ -4,6 +4,10 @@ import type { ReactNode } from 'react';
 import { useReveal } from './useReveal';
 import './section.css';
 
+// No aria-label. It duplicated the <h2> two lines below it verbatim, so a
+// screen reader announced "The interrogation, region" and then "The
+// interrogation, heading level 2". A section containing a heading is already
+// findable and already named by it.
 export function Section({
   index,
   title,
@@ -24,7 +28,6 @@ export function Section({
     <section
       ref={ref}
       className={`scene ${wide ? 'wide' : ''} ${shown ? 'shown' : ''}`}
-      aria-label={title}
     >
       <div className="scene-head">
         <span className="scene-index label">{index}</span>
