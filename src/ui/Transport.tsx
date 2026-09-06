@@ -4,6 +4,7 @@
 // Continuous controls — the scrub head and the speed scrubber — map directly
 // with zero easing. Discrete controls — cipher, MAC — get a timed transition
 // (CLAUDE.md §6).
+import { useState, useCallback } from 'react';
 import { useStore } from '../state/store';
 import { hex } from './format';
 import './transport.css';
@@ -51,6 +52,7 @@ export function Transport() {
           <button onClick={step} aria-label="Single step, one oracle call" title="→">step</button>
           <button onClick={fastForward} aria-label="Fast-forward past the rejections" title="F">skip</button>
           <button onClick={restart} aria-label="Restart the recovery" title="R">restart</button>
+          <LinkToMoment />
         </div>
 
         <label className="t-speed">
@@ -107,5 +109,37 @@ function Readout({ k, v, tone }: { k: string; v: string; tone?: string }) {
       <dt className="label">{k}</dt>
       <dd className="readout-v mono">{v}</dd>
     </div>
+  );
+}
+
+// A link to the exact step on screen (B2). The address bar is updated first and
+// unconditionally, so the feature works with the clipboard denied, unavailable,
+// or absent over plain http: the URL is correct either way and the copy is a
+// convenience on top of it. The confirmation says which of the two happened
+// rather than claiming a copy that may not have occurred.
+function LinkToMoment() {
+  const { linkToMoment } = useStore();
+  const [said, setSaid] = useState<string | null>(null);
+
+  const onClick = useCallback(() => {
+    const url = linkToMoment();
+    const settle = (msg: string) => {
+      setSaid(msg);
+      window.setTimeout(() => setSaid(null), 2400);
+    };
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url).then(
+        () => settle('link copied'),
+        () => settle('link is in the address bar'),
+      );
+    } else {
+      settle('link is in the address bar');
+    }
+  }, [linkToMoment]);
+
+  return (
+    <button onClick={onClick} aria-label="Link to this moment in the recovery">
+      {said ?? 'link'}
+    </button>
   );
 }

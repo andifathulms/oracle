@@ -16,7 +16,10 @@ import {
 } from 'react';
 import { buildTarget, recoverMessage, type AttackTarget, type MessageRecovery } from '../engine';
 import { buildTimeline, selectView, collapseSweep, type Timeline, type ViewState } from './timeline';
-import { DEFAULT_CONFIG, readConfig, writeConfig, type SessionConfig, type Mode } from './url';
+import {
+  DEFAULT_CONFIG, readConfig, writeConfig, readMoment, writeMoment,
+  type SessionConfig, type Mode,
+} from './url';
 import type { CipherKind } from '../engine';
 
 interface Store {
@@ -43,6 +46,7 @@ interface Store {
   seekBlock: (blockIndex: number) => void;
   seek: (index: number) => void;
   newSeed: () => void;
+  linkToMoment: () => string;
 }
 
 const StoreContext = createContext<Store | null>(null);
@@ -73,6 +77,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [index, setIndex] = useState(-1);
   const [playing, setPlaying] = useState(false);
 
+  // A moment deep-linked in the URL (B2). Held in a ref because it must be
+  // consumed exactly once: the reset-on-new-trace effect below runs on first
+  // mount too, and would otherwise stamp the shared position back to -1.
+  const pendingMoment = useRef<number | null>(
+    typeof window === 'undefined' ? null : readMoment(),
+  );
+
   const reducedMotion = useMemo(
     () =>
       typeof window !== 'undefined' &&
@@ -89,9 +100,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return { target: t, recovery: r, timeline: tl };
   }, [config.seed, config.cipher, config.mac]);
 
-  // Reset playback when the trace changes.
+  // Reset playback when the trace changes, unless a shared moment is waiting.
+  // The link's index is clamped to the trace actually built: a link made
+  // against a different seed or cipher lands somewhere valid rather than
+  // throwing, which is the honest failure mode for a position that only means
+  // anything next to the config it was captured with.
   useEffect(() => {
-    setIndex(-1);
+    const pending = pendingMoment.current;
+    pendingMoment.current = null;
+    const last = timeline.events.length - 1;
+    setIndex(pending == null ? -1 : Math.min(Math.max(pending, -1), last));
     setPlaying(false);
   }, [timeline]);
 
@@ -160,6 +178,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   // Scrubbing the whole trace is free — the recovery already exists.
+  // Stamp the current position into the URL and hand back the resulting link.
+  // Writing happens here and nowhere else, so scrubbing stays free of history
+  // churn (CLAUDE.md §5: the trace already exists, scrubbing must cost nothing).
+  const linkToMoment = useCallback(() => writeMoment(index), [index]);
+
   const seek = useCallback(
     (i: number) => {
       setPlaying(false);
@@ -192,6 +215,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     fastForward,
     restart,
     seekBlock,
+    linkToMoment,
     seek,
     newSeed: () => patch({ seed: Math.random().toString(36).slice(2, 8) }),
   };

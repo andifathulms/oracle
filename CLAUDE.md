@@ -212,6 +212,12 @@ Seed serialises to the URL, so a specific message and its recovery are reproduci
 mode, MAC on/off, and speed serialise too. There is no user secret to protect here — the whole
 message is synthetic and the point is to reveal it — so URL sharing is unconditionally safe.
 
+A trace position serialises as `t`, deliberately outside `SessionConfig`: a config change
+rebuilds the attack, and a playback position must never do that. It is written only when the
+reader asks for a link, never during playback, so scrubbing stays free (§5). `t` means nothing
+without the config beside it, so every read is clamped against the timeline actually built — a
+link made against a different seed lands somewhere valid instead of throwing.
+
 ## 8. Copy
 
 English, sentence case, no exclamation marks.
