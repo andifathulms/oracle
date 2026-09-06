@@ -173,7 +173,7 @@
   transition: opacity 120ms var(--ease-standard), transform 120ms var(--ease-standard);
   text-align: left;
 }
-.cell.known:hover .derive, .cell.known:focus-visible .derive {
+.cell.known:hover .derive, .cell.known:focus-visible .derive, .cell.known.open .derive {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -216,5 +216,5 @@
   .cell { height: var(--cell-mobile); font-size: var(--t-byte-mobile); }
   .cell.plain.known { font-size: var(--t-byte-mobile-char); }
   .derive { position: fixed; left: var(--s-2); right: var(--s-2); bottom: 96px; transform: none; max-width: none; }
-  .cell.known:hover .derive, .cell.known:focus-visible .derive { transform: none; }
+  .cell.known:hover .derive, .cell.known:focus-visible .derive, .cell.known.open .derive { transform: none; }
 }

@@ -7,6 +7,7 @@
 // derivation, so any single byte's claim can be audited without replaying the
 // sweep (DESIGN.md §5.1). Everything in the popover is computed from public
 // values and recovered values — never from the key.
+import { useState } from 'react';
 import { useStore } from '../../state/store';
 import { hex, printable } from '../../ui/format';
 import './stack.css';
@@ -113,6 +114,7 @@ export function Stack() {
             <Byte
               key={`i${i}`}
               className={`intermediate known ${arriving ? 'arriving' : ''}`}
+              row="intermediate"
               text={hex(r.intermediate)}
               index={i}
               r={r}
@@ -130,6 +132,7 @@ export function Stack() {
             <Byte
               key={`p${i}`}
               className={`plain known ${arriving ? 'arriving' : ''}`}
+              row="plaintext"
               text={printable(r.plaintext)}
               index={i}
               r={r}
@@ -161,22 +164,51 @@ function RowLabel({ label, note, tone }: { label: string; note: string; tone: st
 // A resolved byte, with its derivation on hover or focus.
 function Byte({
   className,
+  row,
   text,
   index,
   r,
   realPrev,
 }: {
   className: string;
+  row: string;
   text: string;
   index: number;
   r: { intermediate: number; plaintext: number; paddingTarget: number };
   realPrev: number;
 }) {
   const craftedByte = r.intermediate ^ r.paddingTarget;
+  const [open, setOpen] = useState(false);
+
+  // The derivation is content, not a name. It used to be sealed behind
+  // aria-label={`Byte N derivation`}, which overrides everything inside the
+  // button, so a screen reader heard the label and never the byte value, the
+  // two XOR lines or the decoded character. The app's audit affordance, the
+  // thing that shows a byte was derived rather than known, was the one part of
+  // the app assistive tech could not reach (WCAG 4.1.2, 1.3.1).
+  //
+  // So: no aria-label. The button is named by its own visible text plus a
+  // visually-hidden row word, and the derivation is associated as a
+  // description rather than swallowed into the name.
+  const describedBy = `derive-${row}-${index}`;
+
   return (
-    <button className={`cell ${className}`} type="button" aria-label={`Byte ${index} derivation`}>
+    <button
+      className={`cell ${className} ${open ? 'open' : ''}`}
+      type="button"
+      aria-expanded={open}
+      aria-describedby={describedBy}
+      onClick={() => setOpen((o) => !o)}
+      onKeyDown={(e) => {
+        // WCAG 1.4.13: content shown on hover or focus must be dismissible
+        // without moving the pointer or the focus.
+        if (e.key === 'Escape' && open) { e.stopPropagation(); setOpen(false); }
+      }}
+      onBlur={() => setOpen(false)}
+    >
+      <span className="visually-hidden">{row} byte {index}: </span>
       <span className="cell-text">{text}</span>
-      <span className="derive" role="tooltip">
+      <span className="derive" role="tooltip" id={describedBy}>
         <span className="derive-head label">byte {index}</span>
         <DeriveLine a={hex(craftedByte)} at="crafted" op="⊕" b={hex(r.paddingTarget)} bt="pad" out={hex(r.intermediate)} ot="intermed" />
         <DeriveLine a={hex(r.intermediate)} at="intermed" op="⊕" b={hex(realPrev)} bt="realprev" out={hex(r.plaintext)} ot="plain" />
