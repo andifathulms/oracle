@@ -61,7 +61,7 @@
   padding-right: 4px;
 }
 .row-name { font-family: var(--font-mono); font-size: var(--t-small); color: var(--ink-mid); }
-.row-note { color: var(--ink-ghost); font-size: var(--t-nano); line-height: 1.25; max-width: 104px; }
+.row-note { color: var(--ink-ghost); font-size: var(--t-micro); line-height: 1.3; max-width: 104px; }
 .row-label.crafted .row-name { color: color-mix(in srgb, var(--crafted) 80%, var(--ink-mid)); }
 .row-label.gold .row-name { color: color-mix(in srgb, var(--recovered) 60%, var(--ink-mid)); }
 .addr-label { justify-self: end; padding-right: 4px; color: var(--ink-ghost); }
@@ -181,7 +181,7 @@
 .derive-line { display: flex; align-items: baseline; gap: 5px; font-family: var(--font-mono); font-size: var(--t-data); color: var(--crafted-bright); }
 .derive-line em { font-style: normal; font-weight: 600; }
 .derive-line em.gold { color: var(--recovered-bright); }
-.derive-line .dl { font-size: var(--t-nano); color: var(--ink-ghost); letter-spacing: var(--track-label); }
+.derive-line .dl { font-size: var(--t-micro); color: var(--ink-ghost); letter-spacing: var(--track-label); }
 .derive-line .op { color: var(--ink-faint); padding: 0 2px; }
 .derive-char { font-family: var(--font-sans); font-size: var(--t-small); color: var(--ink-mid); }
 .derive-char strong { color: var(--recovered-bright); }

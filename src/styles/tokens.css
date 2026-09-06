@@ -74,7 +74,12 @@
   --t-data: 13px;                                   /* addresses, secondary hex */
   --t-small: 12px;                                  /* labels and legends, not prose */
   --t-micro: 10.5px;                                /* the smallest labels */
-  --t-nano: 9.5px;                                  /* derivation popover labels only */
+  /* The floor. It exists for the play glyph, which is an icon rather than text
+     and is labelled by its button. No sentence, label or gloss uses it: those
+     bottom out at --t-micro. It was briefly the size of the derivation
+     popover's labels, which made the app's own audit affordance the least
+     readable thing in it. */
+  --t-nano: 9.5px;                                  /* the play glyph, and nothing else */
   /* The byte cells shrink on a phone: the module is 30px there, so --t-byte's
      17px floor no longer fits inside it. These are the same rung, measured for
      the smaller cell. */
