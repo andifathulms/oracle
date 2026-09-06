@@ -109,7 +109,13 @@
   .page { gap: var(--s-5); padding-top: var(--s-4); }
 }
 @media (max-width: 640px) {
+  /* The subtitle stopped being display:none'd when the overture took over the
+     job of explaining the app, but letting it wrap freely could push a sticky
+     masthead to three rows directly above an overture sized to fit the first
+     screen. It stays, on one line, clipped if the viewport is too narrow for
+     it: the overture says the same thing in full a few hundred pixels below. */
   .masthead-inner { padding: 12px var(--s-2); flex-wrap: wrap; gap: var(--s-2); }
+  .brand-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .modes { margin-left: auto; }
   .page, .colophon { padding-left: var(--s-2); padding-right: var(--s-2); }
 }
