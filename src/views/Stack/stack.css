@@ -20,6 +20,10 @@
   display: grid;
   --label-w: 108px;
   --colgap: 6px;
+  /* The row height the beam spans. Tracks .cell's height at every breakpoint;
+     the beam used to measure itself in --cellw, a width, which only agreed
+     with the rows while the cells were square. */
+  --row-h: var(--cell);
   /* Cells hold their 40px module until the container cannot afford it, then
      shrink together. The columns never wrap and never scroll away. */
   --cellw: min(var(--cell), (100% - var(--label-w) - 16 * var(--colgap)) / 16);
@@ -36,7 +40,7 @@
 .beam {
   position: absolute;
   top: 8px;
-  height: calc(3 * var(--cellw) + 2 * 6px + 16px);
+  height: calc(4 * var(--row-h) + 3 * 6px + 16px);
   width: calc(var(--cellw) + 8px);
   margin-left: -4px;
   border-radius: var(--radius-lg);
@@ -82,6 +86,17 @@
 
 .cell.crafted { color: var(--crafted-bright); border-color: color-mix(in srgb, var(--crafted) 22%, var(--rule)); }
 .cell.crafted.blank { color: var(--ink-ghost); border-color: var(--rule); }
+
+/* The seen row is derived, not a new meaning, so it takes no hue: DESIGN.md §2
+   holds green, gold, blue and violet for the bit, the recovered, the crafted
+   and the seal. It reads as instrument neutral, one step quieter than a
+   recovered value, and the forced tail is the part that carries information. */
+.cell.seen.known {
+  color: var(--ink-mid);
+  border-color: var(--rule-strong);
+  background: linear-gradient(180deg, var(--panel), var(--bg-tint));
+}
+.row-label.seen .row-name { color: var(--ink-mid); }
 
 /* Void cells are genuine holes — below the surface, not a dimmed value. */
 .cell.void {
@@ -189,6 +204,7 @@
     scrollbar-width: thin;
     scroll-snap-type: x proximity;
   }
+  .stack-grid { --row-h: var(--cell-mobile); }
   .cell { height: var(--cell-mobile); font-size: var(--t-byte-mobile); }
   .cell.plain.known { font-size: var(--t-byte-mobile-char); }
   .derive { position: fixed; left: var(--s-2); right: var(--s-2); bottom: 96px; transform: none; max-width: none; }

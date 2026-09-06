@@ -1,6 +1,7 @@
-// The hero: three aligned rows of 16 byte-cells (DESIGN.md §4.3, §5.1).
-// Crafted (blue, attacker-controlled), intermediate (void → gold), plaintext
-// (void → gold). The intermediate row fills right to left as the attack runs.
+// The hero: four aligned rows of 16 byte-cells (DESIGN.md §4.3, §5.1).
+// Crafted (blue, attacker-controlled), seen (the padding the oracle actually
+// judges), intermediate (void → gold), plaintext (void → gold). The
+// intermediate row fills right to left as the attack runs.
 //
 // A resolved byte is a button: hovering or focusing it opens the full
 // derivation, so any single byte's claim can be audited without replaying the
@@ -71,6 +72,27 @@ export function Stack() {
               className={`cell crafted ${active === i ? 'active' : ''} ${val == null ? 'blank' : ''}`}
             >
               {val == null ? '··' : hex(val)}
+            </div>
+          );
+        })}
+
+        {/* P_seen = intermediate ⊕ crafted (PRD §2). The quantity the oracle
+            actually judges, and the one term of the mechanism the stack never
+            drew. Knowable only where the intermediate is known, which is
+            exactly the forced tail — so the row shows the padding being held
+            at 03 03 03 while the next byte sweeps, and stays void everywhere
+            the attacker is still guessing. It reveals nothing the attack does
+            not already have. */}
+        <RowLabel label="seen" note="what the oracle judges" tone="seen" />
+        {cols.map((i) => {
+          const r = recovered.get(i);
+          const seen = r && crafted ? (r.intermediate ^ crafted[i]) & 0xff : null;
+          if (seen == null) {
+            return <div key={`s${i}`} className={`cell seen void ${active === i ? 'active' : ''}`} />;
+          }
+          return (
+            <div key={`s${i}`} className={`cell seen known ${active === i ? 'active' : ''}`}>
+              {hex(seen)}
             </div>
           );
         })}

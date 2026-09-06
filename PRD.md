@@ -130,10 +130,15 @@ Full visual and motion specification in DESIGN.md.
 
 ### 5.1 The stack — the hero
 
-Three aligned rows of 16 byte-cells each:
+Four aligned rows of 16 byte-cells each:
 
 - **Crafted previous block** — what the attacker sends. Editable in manual mode, driven by the
   sweep in auto mode.
+- **Seen** — `P_seen = intermediate ⊕ crafted`, the padding the oracle actually judges (§2).
+  Knowable only where the intermediate is known, which is exactly the forced tail, so the row
+  shows the pad being held at `03 03 03` while the next byte sweeps and stays void everywhere
+  the attacker is still guessing. It is the one term of §2's mechanism the stack used to omit,
+  and it reveals nothing the attack does not already hold.
 - **Intermediate block** — `Dk(Cᵢ)`. Unknown, revealed byte by byte as the attack recovers it.
 - **Plaintext** — resolves as each intermediate byte is found.
 

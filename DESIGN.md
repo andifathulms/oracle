@@ -234,8 +234,14 @@ lamp, one number. Its austerity is the guarantee that the attack is working from
 
 ### 4.3 The stack
 
-Three rows, 16 columns, byte cells aligned into columns so each byte's vertical story reads at a
-glance: what was sent, what it revealed, what it means.
+Four rows, 16 columns, byte cells aligned into columns so each byte's vertical story reads at a
+glance: what was sent, what the oracle judged, what it revealed, what it means.
+
+The second row is `P_seen`, the padding the oracle is actually deciding on. It takes no hue:
+§2 holds green, gold, blue and violet for the bit, the recovered, the crafted and the seal, and
+`P_seen` is a derived view rather than a fifth meaning, so it reads as instrument neutral. It is
+knowable only where the intermediate is known, so it fills exactly as far as the recovery has
+reached and shows the forced pad the sweep is working against.
 
 The intermediate and plaintext rows begin as `--void` cells — holes. The crafted row begins
 populated in `--crafted` blue. As the attack proceeds, gold fills the intermediate and plaintext

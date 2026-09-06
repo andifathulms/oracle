@@ -22,13 +22,18 @@ describe('the app mounts and renders the interrogation', () => {
   it('renders the title, the oracle lamp, and the stack without throwing', () => {
     const { getByText, container } = render(<App />);
     expect(getByText(/Oracle/)).toBeTruthy();
-    expect(getByText(/the oracle/i)).toBeTruthy();
-    // Three labelled rows and sixteen columns in each, all in one grid so the
-    // byte columns cannot drift out of alignment.
-    expect(container.querySelectorAll('.stack-grid .row-label').length).toBe(3);
+    // Query the panel heading itself. A loose /the oracle/i text match picks up
+    // any prose mentioning the oracle, which is most of the app.
+    expect(container.querySelector('.oracle-title')!.textContent).toMatch(/the oracle/i);
+    // Four labelled rows and sixteen columns in each, all in one grid so the
+    // byte columns cannot drift out of alignment (PRD §5.1, DESIGN.md §4.3).
+    expect(container.querySelectorAll('.stack-grid .row-label').length).toBe(4);
     expect(container.querySelectorAll('.stack-grid .cell.crafted').length).toBe(16);
+    expect(container.querySelectorAll('.stack-grid .cell.seen').length).toBe(16);
     expect(container.querySelectorAll('.stack-grid .cell.intermediate').length).toBe(16);
     expect(container.querySelectorAll('.stack-grid .cell.plain').length).toBe(16);
+    // Nothing is judged before a question is asked: the seen row starts void.
+    expect(container.querySelectorAll('.stack-grid .cell.seen.known').length).toBe(0);
   });
 
   it('single-stepping advances the oracle call counter', () => {
