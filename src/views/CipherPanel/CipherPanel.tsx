@@ -23,8 +23,6 @@ export function CipherPanel() {
       })),
     [config.seed],
   );
-  const worst = Math.max(...rows.map((r) => r.calls));
-
   return (
     <section className="cipher panel" aria-label="Block cipher">
       <header className="cipher-head">
@@ -67,13 +65,8 @@ export function CipherPanel() {
         {rows.map((r) => (
           <div key={r.kind} className={`ev-row ${r.kind === config.cipher ? 'on' : ''}`}>
             <span className="ev-name mono">{r.kind === 'aes' ? 'AES-128' : 'toy permutation'}</span>
-            <span className="ev-bar" aria-hidden="true">
-              <span
-                className="ev-fill"
-                style={{ width: `${(r.calls / worst) * 100}%` }}
-              />
-            </span>
             <span className="ev-calls mono">{r.calls.toLocaleString()}</span>
+            <span className="ev-unit label">oracle calls</span>
           </div>
         ))}
       </div>
