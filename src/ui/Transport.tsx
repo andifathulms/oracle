@@ -68,7 +68,10 @@ export function Transport() {
           />
         </label>
 
-        <dl className="t-readout" aria-label="Live readout">
+        {/* aria-label on a <dl> has the same problem as on a <span>: no role,
+            no reliable exposure. The list is a set of labelled dt/dd pairs and
+            reads correctly without a name on the container. */}
+        <dl className="t-readout">
           <Readout k="block" v={`${view.currentBlock + 1}/${recovery.blocks.length}`} />
           <Readout k="byte" v={view.activeIndex == null ? '··' : String(view.activeIndex)} />
           <Readout

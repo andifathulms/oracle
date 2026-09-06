@@ -44,10 +44,11 @@ describe('the app mounts and renders the interrogation', () => {
     expect(stepBtn).toBeTruthy();
     act(() => stepBtn.click());
     act(() => stepBtn.click());
-    // The oracle panel shows a calls figure. It renders as an odometer — each
-    // digit is a reel of 0-9 slid into place — so the value is on the label
-    // rather than in the text content.
+    // The oracle panel shows a calls figure. It renders as an odometer: each
+    // digit is a reel of 0-9 slid into place, all aria-hidden, so the value a
+    // screen reader receives is the visually-hidden text beside them. Assert
+    // that rather than an attribute, because it is what actually gets read.
     const calls = container.querySelector('.calls-figure')!;
-    expect(calls.getAttribute('aria-label')).toBe('2');
+    expect(calls.querySelector('.visually-hidden')!.textContent).toBe('2');
   });
 });
