@@ -19,9 +19,14 @@ export function DisambiguationBar() {
     if (ev.kind === 'disambiguate' && !ev.stillValid) caught++;
   }
 
+  // Not aria-hidden. This sentence is the only explanation of what the
+  // double-check is, and hiding it meant a screen reader user heard outcomes
+  // announced by the live region below without ever being told what was being
+  // decided (WCAG 1.3.1). PRD §3 calls this the app's best moment; it was
+  // inaudible.
   if (!view.disambiguating) {
     return (
-      <div className="disambig idle" aria-hidden="true">
+      <div className="disambig idle">
         <span className="disambig-dot" />
         <span className="disambig-term">disambiguation</span>
         <span className="disambig-detail">
