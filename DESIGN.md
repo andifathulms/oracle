@@ -44,7 +44,7 @@ the apparatus is calm. A padding oracle attack rendered as cyberpunk would under
 truth is that it works against real, boring, correctly-built systems, and the design should feel
 correct and boring in exactly that way.
 
-**Alignment:** the three-row stack is the spine, and its bytes are the grid everything aligns
+**Alignment:** the four-row stack is the spine, and its bytes are the grid everything aligns
 to. Byte columns run down through the crafted block, the intermediate block, and the plaintext,
 so a single byte's story is a vertical read.
 
@@ -261,7 +261,7 @@ Panels raised by value, hairline separated, 2 px radius. No shadow.
 ### 4.5 Mobile
 
 The stack is the app and it stays. On a phone it shows one block at a time and scrolls
-horizontally between blocks with snap points; the three rows stay vertically aligned. The oracle
+horizontally between blocks with snap points; the four rows stay vertically aligned. The oracle
 panel moves above the stack as a single lamp and counter. The XOR resolution moves below. The
 controls collapse to sweep, speed, and a sheet for cipher and MAC.
 

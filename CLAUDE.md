@@ -51,7 +51,7 @@ the engine implements. DESIGN.md is how it looks.
 │  │  │  └─ trace.ts          # every sweep step, every disambiguation, recorded
 │  │  └─ index.ts             # exports the attack-facing surface ONLY
 │  ├─ views/
-│  │  ├─ Stack/               # the three-row hero
+│  │  ├─ Stack/               # the four-row hero
 │  │  ├─ Sweep/
 │  │  ├─ XorResolve/
 │  │  ├─ Message/
@@ -242,7 +242,7 @@ Do not build the UI before step 4 passes.
 4. The attack with disambiguation. `attack.test.ts` and `disambiguation.test.ts`, including
    the assertion that the naive path fails on a `0x02`-terminated plaintext. **Gate.**
 5. `no-network.test.ts` wired into CI. **Gate.**
-6. Design tokens, shell, the three-row stack rendering a completed trace statically.
+6. Design tokens, shell, the four-row stack rendering a completed trace statically.
 7. The sweep replay against the stack, with speed control. This is the hero; tune its pacing
    before building anything else — too fast and the mechanism is invisible, too slow and nobody
    watches a block finish.

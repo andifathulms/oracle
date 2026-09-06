@@ -51,7 +51,7 @@ export function Stack() {
       </div>
 
       <div className="stack-grid">
-        {/* The beam: a column of light through all three rows, marking the byte
+        {/* The beam: a column of light through all four rows, marking the byte
             under attack. A raise, not a colour (DESIGN.md §4.3). */}
         {active != null ? (
           <div

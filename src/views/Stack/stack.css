@@ -198,7 +198,7 @@
 
 /* Below the point where sixteen 30px cells no longer fit, the stack keeps its
    module and scrolls instead of shrinking to illegibility (DESIGN.md §4.5).
-   The three rows stay vertically aligned because they share one grid. */
+   The four rows stay vertically aligned because they share one grid. */
 @media (max-width: 720px) {
   /* At this width no note fits at all. Scene 01's lede names the seen row
      instead, so the gloss survives even here. */
