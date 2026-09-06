@@ -64,6 +64,10 @@
 }
 .lamp.invalid { background: linear-gradient(180deg, #171b22, #12161c); }
 .lamp.idle { background: #12161c; }
+/* Held steady above the flash-safe speed: no strike animation, no bright state,
+   so the lamp cannot strobe at the top of the scrubber's range. */
+.lamp.rapid { background: linear-gradient(180deg, #1b2028, #141920); }
+.lamp.rapid .lamp-word { color: #8d9aab; font-size: var(--t-h2); }
 .lamp.valid {
   background: radial-gradient(120% 120% at 50% 30%, var(--valid-bright), var(--valid) 70%);
   box-shadow: 0 0 40px var(--valid-glow), 0 0 0 1px var(--valid-bright) inset;

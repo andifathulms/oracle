@@ -6,7 +6,7 @@ import { Odometer } from '../../ui/Odometer';
 import './oracle.css';
 
 export function OraclePanel() {
-  const { view, callsAt, config } = useStore();
+  const { view, callsAt, config, rapid } = useStore();
   const sealed = config.mac;
 
   // Three display states, not two. 'idle' means no question has been asked yet,
@@ -14,7 +14,14 @@ export function OraclePanel() {
   // been refused, at the largest type size on the landing view. yes/no are now
   // reserved for actual replies; the void glyph stands for an absent one, the
   // same way it does in the stack.
-  const word = view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : '··';
+  // Above the flash-safe speed the lamp holds steady instead of strobing green
+  // once per recovered byte (WCAG 2.3.1). DESIGN.md §5.2 already asks for this
+  // shape at fast-forward: the rejections blur into a rapid count and only the
+  // accept and the disambiguation are held. Here the accepts blur too, because
+  // at 600 steps a second nobody resolves them individually anyway.
+  const word = rapid
+    ? 'sweeping'
+    : view.lamp === 'valid' ? 'yes' : view.lamp === 'invalid' ? 'no' : '··';
 
   return (
     <aside className={`oracle panel ${sealed ? 'sealed' : ''}`} aria-label="The oracle">
@@ -31,7 +38,7 @@ export function OraclePanel() {
           live region is <Announcer />, which speaks meaning rather than every
           individual bit. */}
       <div className="lamp-bezel">
-        <div className={`lamp ${view.lamp}`}>
+        <div className={`lamp ${rapid ? 'rapid' : view.lamp}`}>
           <span className="lamp-glass" aria-hidden="true" />
           <span className="lamp-word">{word}</span>
         </div>

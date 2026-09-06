@@ -32,6 +32,7 @@ interface Store {
   index: number; // current timeline position (-1 = before start)
   callsAt: number; // oracle calls represented up to the current index
   reducedMotion: boolean;
+  rapid: boolean;
   setSeed: (seed: string) => void;
   setCipher: (c: CipherKind) => void;
   setMac: (on: boolean) => void;
@@ -57,6 +58,21 @@ const StoreContext = createContext<Store | null>(null);
 function stepsPerSecond(speed: number): number {
   // 2 steps/s at 0, up to ~600/s near 1 — exponential feels linear to the eye.
   return 2 * Math.pow(300, speed);
+}
+
+// The lamp goes bright green once per accepted byte and sits dim for the ~128
+// rejections in between, so its flash rate is steps/s divided by roughly 128.
+// WCAG 2.3.1 puts the threshold at three flashes per second, which this crosses
+// at about 384 steps/s — inside the top of the scrubber's range.
+//
+// The lamp is a 120x84 area, small enough that it probably falls under 2.3.1's
+// small-safe-area exemption on its own. Probably is not a word to ship a
+// photosensitivity risk on, and the calculation depends on viewing distance and
+// on what else is repainting alongside it.
+const FLASH_SAFE_STEPS_PER_SECOND = 3 * 128;
+
+export function isRapid(speed: number, playing: boolean): boolean {
+  return playing && stepsPerSecond(speed) > FLASH_SAFE_STEPS_PER_SECOND;
 }
 
 // Count oracle calls represented by timeline events up to `index`. Sweeps and
@@ -203,6 +219,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     index,
     callsAt,
     reducedMotion,
+    rapid: isRapid(config.speed, playing),
     setSeed: (seed) => patch({ seed }),
     setCipher: (cipher) => patch({ cipher }),
     setMac: (mac) => patch({ mac }),
