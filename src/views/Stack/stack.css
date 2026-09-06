@@ -188,13 +188,21 @@
 
 @media (max-width: 900px) {
   .stack-grid { --label-w: 74px; --colgap: 5px; }
+  /* The notes go, with one exception. "crafted", "intermed" and "plain" carry
+     themselves; "seen" does not, and unglossed it is the most cryptic thing in
+     the hero. It keeps its note and the label column keeps the width to hold
+     it. */
   .row-note { display: none; }
+  .row-label.seen .row-note { display: block; }
 }
 
 /* Below the point where sixteen 30px cells no longer fit, the stack keeps its
    module and scrolls instead of shrinking to illegibility (DESIGN.md §4.5).
    The three rows stay vertically aligned because they share one grid. */
 @media (max-width: 720px) {
+  /* At this width no note fits at all. Scene 01's lede names the seen row
+     instead, so the gloss survives even here. */
+  .row-label.seen .row-note { display: none; }
   .stack-grid {
     --label-w: 62px;
     --colgap: 4px;

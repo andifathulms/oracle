@@ -87,7 +87,7 @@ function Shell() {
           <Section
             index="01"
             title="The interrogation"
-            lede="The attacker holds only the ciphertext. Every question is one crafted block; every answer is one bit. The intermediate row fills from the right as bytes are recovered."
+            lede="The attacker holds only the ciphertext. Every question is one crafted block; every answer is one bit. The seen row is the padding the oracle judges; the intermediate row fills from the right as bytes are recovered."
             wide
           >
             <div className="interrogation">
