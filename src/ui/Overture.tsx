@@ -20,11 +20,7 @@ export function Overture() {
 
   return (
     <header className="overture">
-      <h1 className="overture-title">
-        Read a message
-        <br />
-        without its key.
-      </h1>
+      <h1 className="overture-title">Read a message without its key.</h1>
 
       <p className="overture-lede">
         A server that reveals only whether a message&rsquo;s padding is valid leaks enough to

@@ -19,8 +19,10 @@
   letter-spacing: -0.03em;
   color: var(--ink);
   margin: 0;
-  /* The line break is authored in the markup at desktop. Below 640px the
-     headline sets its own breaks, so the <br> is neutralised there. */
+  /* No authored break. A measure in ch decides where the headline turns, so it
+     breaks sensibly at every width instead of only at the two the <br> and its
+     640px override happened to cover. */
+  max-width: 15ch;
   text-wrap: balance;
 }
 
@@ -56,7 +58,6 @@
 
 @media (max-width: 640px) {
   .overture { gap: var(--s-2); }
-  .overture-title br { display: none; }
   .overture-cta { width: 100%; text-align: center; }
 }
 
