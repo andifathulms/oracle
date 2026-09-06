@@ -147,6 +147,7 @@ Base 16 px. One ramp, nine rungs, each with a job. All sizes are fluid between a
 | `--t-h1` | 19 → 24 | Plex Mono | Scene titles |
 | `--t-lede` | 17 → 20 | Plex Sans | The overture's supporting line |
 | `--t-byte` | 17 → 22 | Plex Mono | The byte cells in the stack |
+| `--t-plain` | 16 → 26 | Plex Mono | The recovered message in the message view |
 | `--t-h2` | 16 → 19 | Plex Mono | Panel headings, diagram labels |
 | `--t-body` | 16 | Plex Sans | **All** running prose |
 | `--t-data` | 13 | Plex Mono | Addresses, secondary hex, tables |

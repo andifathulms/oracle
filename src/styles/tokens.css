@@ -68,6 +68,7 @@
   --t-h1: clamp(19px, 1rem + 0.6vw, 24px);          /* scene titles */
   --t-lede: clamp(17px, 1rem + 0.4vw, 20px);        /* the overture's supporting line */
   --t-byte: clamp(17px, 0.9rem + 0.5vw, 22px);      /* the byte cells */
+  --t-plain: clamp(16px, 0.7rem + 1vw, 26px);       /* the recovered message, the payoff */
   --t-h2: clamp(16px, 0.88rem + 0.22vw, 19px);      /* panel headings, diagram labels */
   --t-body: 16px;                                   /* ALL running prose */
   --t-data: 13px;                                   /* addresses, secondary hex */
