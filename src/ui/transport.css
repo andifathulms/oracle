@@ -84,7 +84,10 @@
   background: var(--panel-high);
   border: 1px solid var(--rule-strong);
   color: var(--ink-mid);
-  white-space: nowrap;
+  /* Bounded rather than nowrap. It sits outside the flex flow with no width
+     constraint, so at 320px a longer message would run off the viewport and
+     force horizontal scrolling (WCAG 1.4.10). */
+  max-width: calc(100vw - 2 * var(--s-2));
   pointer-events: none;
 }
 .link-said:empty { display: none; }
