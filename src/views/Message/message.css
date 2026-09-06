@@ -57,7 +57,15 @@
   padding-top: var(--s-2);
   border-top: 1px solid var(--rule);
 }
-.stat { display: flex; flex-direction: column; gap: 3px; }
+/* A <dl>, so dt must precede its dd in the DOM. The figure still reads first
+   visually via `order`; the announced sequence stays label, value, note, which
+   is the meaningful one ("oracle calls, 4,559, a 16-byte block is roughly
+   2,000"), so this does not trip WCAG 1.3.2. */
+.stat { display: flex; flex-direction: column; gap: 3px; margin: 0; }
+.stat dd { margin: 0; }
+.stat .stat-figure { order: 1; }
+.stat .stat-label { order: 2; }
+.stat .stat-note { order: 3; }
 .stat-figure {
   font-family: var(--font-mono);
   font-size: var(--t-display);

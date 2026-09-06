@@ -92,12 +92,15 @@ export function Message() {
   );
 }
 
+// A figure, its label and a note, as a description list rather than three loose
+// spans. Nothing previously tied the number to the words beside it, so a screen
+// reader read a bare count and then, separately, "oracle calls" (WCAG 1.3.1).
 function Stat({ figure, label, note }: { figure: React.ReactNode; label: string; note: string }) {
   return (
-    <div className="stat">
-      <span className="stat-figure">{figure}</span>
-      <span className="stat-label label">{label}</span>
-      <span className="stat-note">{note}</span>
-    </div>
+    <dl className="stat">
+      <dt className="stat-label label">{label}</dt>
+      <dd className="stat-figure">{figure}</dd>
+      <dd className="stat-note">{note}</dd>
+    </dl>
   );
 }
