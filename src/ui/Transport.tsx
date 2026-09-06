@@ -117,6 +117,11 @@ function Readout({ k, v, tone }: { k: string; v: string; tone?: string }) {
 // or absent over plain http: the URL is correct either way and the copy is a
 // convenience on top of it. The confirmation says which of the two happened
 // rather than claiming a copy that may not have occurred.
+//
+// The confirmation is NOT the button's label. It used to be, and the longest
+// variant ran to twenty-six characters, so pressing a four-character button
+// resized it and shoved every sibling in the flex row. The label is fixed; the
+// message appears beside it in a slot that is always the same width.
 function LinkToMoment() {
   const { linkToMoment } = useStore();
   const [said, setSaid] = useState<string | null>(null);
@@ -129,17 +134,22 @@ function LinkToMoment() {
     };
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(url).then(
-        () => settle('link copied'),
-        () => settle('link is in the address bar'),
+        () => settle('copied'),
+        () => settle('in the address bar'),
       );
     } else {
-      settle('link is in the address bar');
+      settle('in the address bar');
     }
   }, [linkToMoment]);
 
   return (
-    <button onClick={onClick} aria-label="Link to this moment in the recovery">
-      {said ?? 'link'}
-    </button>
+    <>
+      <button onClick={onClick} aria-label="Link to this moment in the recovery">
+        link
+      </button>
+      <span className="link-said label" role="status" aria-live="polite">
+        {said}
+      </span>
+    </>
   );
 }

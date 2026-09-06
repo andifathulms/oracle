@@ -58,6 +58,18 @@
 .t-play .play { min-width: 96px; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
 .t-play .glyph { font-size: var(--t-nano); color: var(--recovered); }
 
+/* The link confirmation. A fixed-width slot so the message appearing and
+   expiring cannot resize the control row around it; it collapses to nothing
+   only below 640px, where the row has no width to spare. */
+.link-said {
+  display: inline-flex;
+  align-items: center;
+  width: 10.5rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .t-speed { display: flex; align-items: center; gap: 10px; flex: 1 1 140px; min-width: 120px; max-width: 220px; }
 .t-speed input[type='range'] { flex: 1; height: 2px; }
 
@@ -91,6 +103,7 @@
   .t-play { flex: 1 1 100%; }
   .t-play button { flex: 1; }
   .t-play .play { min-width: 0; }
+  .link-said { display: none; }
   .t-speed { flex: 1 1 auto; max-width: none; }
   /* The cipher and MAC switches live in their own panels; the bar does not
      need to carry a second copy of them on a phone. */
