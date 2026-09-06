@@ -33,16 +33,27 @@
   background: var(--recovered-bright);
   box-shadow: 0 0 10px var(--recovered-glow);
 }
+/* The visible track stays 2px; the input that carries it is given the minimum
+   hit area (WCAG 2.5.8) and centred over the track, so the target grows without
+   the instrument getting heavier. */
 .scrub-input {
   position: absolute;
-  left: 0; right: 0; top: 0;
+  left: 0; right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
-  height: 14px;
+  height: var(--target-min);
+  min-height: var(--target-min);
   margin: 0;
   opacity: 0;
   cursor: ew-resize;
 }
-.scrub-input:focus-visible + .scrub-track,
+/* The track precedes the input in the DOM, so the old `.scrub-input:focus-visible
+   + .scrub-track` rule could never match and the only working selector was the
+   :has() one — leaving no focus indicator at all wherever :has() is unsupported,
+   on an input that is itself opacity:0 (WCAG 2.4.7). Outlining the input itself
+   needs neither. */
+.scrub-input:focus-visible { outline: 2px solid var(--crafted-bright); outline-offset: 0; }
 .transport-scrub:has(.scrub-input:focus-visible) .scrub-track { outline: 2px solid var(--crafted-bright); }
 
 .transport-inner {
@@ -103,13 +114,13 @@
    wrap alone, which left them stranded in the corner. */
 @media (max-width: 1240px) {
   /* The readout takes its own row, so the page must reserve one more. */
-  :root { --transport-h: 152px; }
+  :root { --transport-h: 9.5rem; }
   .t-readout { order: 5; width: 100%; justify-content: space-between; }
   .t-config { margin-left: auto; }
 }
 @media (max-width: 640px) {
   /* And here the play group wraps to two rows on top of that. */
-  :root { --transport-h: 212px; }
+  :root { --transport-h: 13.25rem; }
   .transport-inner { padding: 8px var(--s-2) 10px; gap: 10px; }
   .transport-inner button { padding: 7px 10px; }
   /* Five buttons no longer divide 380px. Usable width there is about 348px,

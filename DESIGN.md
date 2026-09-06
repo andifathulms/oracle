@@ -254,6 +254,13 @@ to that column and the eye should be there.
 ### 4.4 Grid and rhythm
 
 8 px base. Byte cells are a fixed 40 px square on desktop, the module the whole layout aligns to.
+
+`--target-min` is 24 px, the minimum hit area for anything interactive (WCAG 2.5.8). Apply it as
+`min-height` / `min-width` so a control can stay visually small while remaining reachable; do not
+reach for extra padding instead, which changes the design.
+
+`--transport-h` reserves the fixed transport bar's height for the page above it, and is expressed
+in `rem` so the reserve grows with text-only zoom exactly as the bar does (WCAG 1.4.4).
 Spacing scale: 8 · 16 · 24 · 40 · 64. Max width 76 rem.
 
 Panels raised by value, hairline separated, 2 px radius. No shadow.

@@ -8,7 +8,14 @@
   flex-wrap: wrap;
 }
 .block-chips { display: flex; gap: 4px; }
-.chip { padding: 4px 10px; font-size: var(--t-micro); letter-spacing: var(--track-label); }
+/* min-height rather than more padding: the chip keeps its visual weight in the
+   legend and still clears the 24px hit area (WCAG 2.5.8). */
+.chip {
+  padding: 4px 10px;
+  min-height: var(--target-min);
+  font-size: var(--t-micro);
+  letter-spacing: var(--track-label);
+}
 .chip.done { color: var(--recovered); border-color: color-mix(in srgb, var(--recovered) 35%, var(--rule)); }
 .chip.on { color: var(--crafted-bright); border-color: var(--crafted); box-shadow: 0 0 0 1px var(--crafted-glow); }
 .stack-dir { color: var(--ink-ghost); }
