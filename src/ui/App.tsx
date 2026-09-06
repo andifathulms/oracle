@@ -67,18 +67,26 @@ function Shell() {
             </div>
           </div>
 
-          <nav className="modes" role="tablist" aria-label="Mode">
+          {/* Two mode switches, not ARIA tabs. They used to carry
+              role=tablist and role=tab with no tabpanel, no aria-controls, no
+              roving tabindex and no arrow-key handling, so they announced an
+              interaction contract the app did not implement, and the arrow keys
+              a tablist promises were being taken by the page shortcuts anyway
+              (WCAG 4.1.2). role=tablist on the <nav> also suppressed its
+              navigation landmark.
+
+              Native buttons with aria-pressed say what these actually are:
+              toggles that swap the view. No role is added; three are removed. */}
+          <nav className="modes" aria-label="Mode">
             <button
-              role="tab"
-              aria-selected={!bitflip}
+              aria-pressed={!bitflip}
               className={!bitflip ? 'on' : ''}
               onClick={() => setMode('recover')}
             >
               Recovery
             </button>
             <button
-              role="tab"
-              aria-selected={bitflip}
+              aria-pressed={bitflip}
               className={bitflip ? 'on' : ''}
               onClick={() => setMode('bitflip')}
             >
