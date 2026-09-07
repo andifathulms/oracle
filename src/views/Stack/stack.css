@@ -103,7 +103,7 @@
   border-color: var(--rule-strong);
   background: linear-gradient(180deg, var(--panel), var(--bg-tint));
 }
-.row-label.seen .row-name { color: var(--ink-mid); }
+.row-label.row-seen .row-name { color: var(--ink-mid); }
 
 /* Void cells are genuine holes — below the surface, not a dimmed value. */
 .cell.void {
@@ -195,12 +195,16 @@
 
 @media (max-width: 900px) {
   .stack-grid { --label-w: 74px; --colgap: 5px; }
+  /* "intermediate" is the app's central term and its only definition was this
+     note, so hiding it here left the word undefined on every laptop under
+     900px and every phone. It keeps its note alongside the seen row. */
+  .row-label.row-intermed .row-note { display: block; }
   /* The notes go, with one exception. "crafted", "intermed" and "plain" carry
      themselves; "seen" does not, and unglossed it is the most cryptic thing in
      the hero. It keeps its note and the label column keeps the width to hold
      it. */
   .row-note { display: none; }
-  .row-label.seen .row-note { display: block; }
+  .row-label.row-seen .row-note { display: block; }
 }
 
 /* Below the point where sixteen 30px cells no longer fit, the stack keeps its
@@ -209,7 +213,7 @@
 @media (max-width: 720px) {
   /* At this width no note fits at all. Scene 01's lede names the seen row
      instead, so the gloss survives even here. */
-  .row-label.seen .row-note { display: none; }
+  .row-label.row-seen .row-note, .row-label.row-intermed .row-note { display: none; }
   .stack-grid {
     --label-w: 62px;
     --colgap: 4px;
@@ -225,3 +229,16 @@
   .derive { position: fixed; left: var(--s-2); right: var(--s-2); bottom: 96px; transform: none; max-width: none; }
   .cell.known:hover .derive, .cell.known:focus-visible .derive, .cell.known.open .derive { transform: none; }
 }
+
+/* The CBC relation, stated at the stack that depends on it. */
+.stack-law {
+  margin: 0;
+  padding: var(--s-2) 0 0;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--ink-mid);
+  max-width: 78ch;
+}
+.stack-law b { font-weight: 600; color: var(--ink); }

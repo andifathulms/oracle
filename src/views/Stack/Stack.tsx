@@ -51,6 +51,19 @@ export function Stack() {
         <span className="stack-dir label">recovered right → left</span>
       </div>
 
+      {/* The relation every row below depends on. It was only drawn in the
+          cipher panel, three scenes further down, so scenes 01 to 03 used
+          "intermediate" and "real previous" before anything said where they
+          come from. */}
+      <p className="stack-law">
+        CBC decrypts each block as <b>plaintext = intermediate ⊕ previous ciphertext block</b>,
+        where the <b>intermediate</b> is D<sub>k</sub>(C), the block cipher applied to this block.
+        The key exists only inside D<sub>k</sub>, and the attack never gets there.{' '}
+        {block === 0
+          ? 'For the first block the previous block is the IV, which is sent in the clear, so the attacker has it like any other.'
+          : `For block C${block + 1} the previous block is C${block}, which the attacker captured with the rest of the ciphertext.`}
+      </p>
+
       <div className="stack-grid">
         {/* The beam: a column of light through all four rows, marking the byte
             under attack. A raise, not a colour (DESIGN.md §4.3). */}
@@ -152,9 +165,11 @@ export function Stack() {
   );
 }
 
+// The row's own name is a class as well as a tone: `tone` is shared (both gold
+// rows use it), and some rules need to reach one row rather than both.
 function RowLabel({ label, note, tone }: { label: string; note: string; tone: string }) {
   return (
-    <div className={`row-label ${tone}`}>
+    <div className={`row-label ${tone} row-${label}`}>
       <span className="row-name">{label}</span>
       <span className="row-note label">{note}</span>
     </div>
