@@ -37,6 +37,17 @@ export function XorResolve() {
 
   return (
     <section className="xor panel" aria-label="XOR resolution" key={stamp}>
+      {/* Where the pad value comes from. It appeared as a bare number in the
+          equation — "pad 06" for byte 10 — with nothing saying why 06. The
+          round forces a pad of length 16 - index so the byte under attack is
+          the first byte of the padding. */}
+      <p className="xor-pad-rule">
+        Byte {commit.index} is the <em>{size - commit.index}</em>
+        {ordinal(size - commit.index)} byte from the end, so this round forces a pad of length{' '}
+        <em>{size - commit.index}</em>: every byte from here to the end must read{' '}
+        <code>{hex(paddingTarget)}</code>.
+      </p>
+
       <Line
         note="The oracle accepted this crafted byte, so the decrypted byte under it must equal the padding value."
         step="1"
@@ -63,6 +74,11 @@ export function XorResolve() {
       <p className="xor-key label">No key was used on either line.</p>
     </section>
   );
+}
+
+function ordinal(n: number): string {
+  if (n % 100 >= 11 && n % 100 <= 13) return 'th';
+  return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
 }
 
 interface TermSpec { label: string; val: string; kind: string; char?: string | undefined }
