@@ -3,7 +3,7 @@
 // guarantee that the attack works from one bit.
 import { useStore } from '../../state/store';
 import { Odometer } from '../../ui/Odometer';
-import { VOID_GLYPH } from '../../ui/format';
+import { VOID_GLYPH, hex } from '../../ui/format';
 import './oracle.css';
 
 export function OraclePanel() {
@@ -31,6 +31,13 @@ export function OraclePanel() {
         <h3 className="oracle-title">The oracle</h3>
         <span className="oracle-badge label">{sealed ? 'sealed' : 'padding check'}</span>
       </div>
+
+      {/* What was actually asked. The oracle's contract is (ciphertext) =>
+          boolean, and the attack submits TWO blocks: the crafted block followed
+          by the target block. The interface showed the crafted row and the
+          reply and nothing in between, so a reader could see the answer without
+          ever seeing the question. */}
+      <Submission />
 
       {/* The lamp: a bezel, a glass, and behind it the one bit.
 
@@ -90,5 +97,44 @@ export function OraclePanel() {
           : 'This oracle answers about a message the app encrypted itself. There is no network, so there is no other target to reach.'}
       </p>
     </aside>
+  );
+}
+
+// The submitted ciphertext, as the oracle receives it.
+function Submission() {
+  const { view } = useStore();
+  const craft = view.craftedBlock;
+  const targetBlock = view.currentBlock;
+
+  if (!craft) {
+    return (
+      <div className="submission idle">
+        <p className="submission-head label">The question</p>
+        <p className="submission-note">
+          Each question is a whole ciphertext: the crafted block, then the block under attack.
+          Nothing has been asked yet.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="submission">
+      <p className="submission-head label">The question, as submitted</p>
+      <div className="submission-blocks">
+        <span className="sub-block crafted">
+          <span className="sub-label label">crafted</span>
+          <span className="sub-bytes mono">{[...craft].map((b) => hex(b)).join(' ')}</span>
+        </span>
+        <span className="sub-block target">
+          <span className="sub-label label">C{targetBlock + 1}, under attack</span>
+          <span className="sub-bytes mono">the block being read</span>
+        </span>
+      </div>
+      <p className="submission-note">
+        PKCS7 looks only at the last block, so the crafted bytes decide the padding the oracle
+        sees while the block under attack stays untouched.
+      </p>
+    </div>
   );
 }
