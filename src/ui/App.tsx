@@ -12,6 +12,7 @@ import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
 import { Announcer } from './Announcer';
 import { Overture } from './Overture';
+import { WorkedExample } from './WorkedExample';
 import { Transport } from './Transport';
 import { DisambiguationBar } from './Disambiguation';
 import { HexExport } from './HexExport';
@@ -110,6 +111,8 @@ function Shell() {
             lede="The attacker holds only the ciphertext. Every question is one crafted block; every answer is one bit. The seen row is the padding the oracle judges; the intermediate row fills from the right as bytes are recovered."
             wide
           >
+            <WorkedExample />
+
             <div className="interrogation">
               <div className="workspace">
                 <Stack />

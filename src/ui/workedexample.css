@@ -1,0 +1,63 @@
+/* The worked example. Reads as prose with numbers in it, not as an instrument:
+   it is the one place in the app that explains before it demonstrates. */
+.worked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-3);
+  border: 1px solid var(--rule);
+  border-left: 2px solid color-mix(in srgb, var(--recovered) 45%, var(--rule));
+  border-radius: var(--radius-panel);
+  background: linear-gradient(180deg, var(--panel), var(--bg-tint));
+}
+.worked-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-h2);
+  color: var(--ink);
+}
+.worked-intro, .worked-close, .worked-text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  color: var(--ink-mid);
+  max-width: 72ch;
+}
+.worked-close { padding-top: var(--s-1); border-top: 1px solid var(--rule); }
+
+.worked-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.worked-step { display: grid; grid-template-columns: 1.6rem 1fr; gap: var(--s-2); align-items: start; }
+.worked-n {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+  padding-top: 2px;
+}
+.worked-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.worked-head {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  font-weight: 600;
+  color: var(--ink);
+}
+.worked-text code {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  color: var(--crafted-bright);
+}
+.worked-text code.gold { color: var(--recovered-bright); }
+.worked-text em { font-style: normal; font-weight: 600; color: var(--ink); }
+.worked-text strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .worked { padding: var(--s-2); }
+  .worked-step { grid-template-columns: 1.2rem 1fr; gap: var(--s-1); }
+}
