@@ -14,6 +14,12 @@ export interface BlockInput {
   targetBlock: Uint8Array; // C_i, the block whose plaintext we recover
   realPrevious: Uint8Array; // C_{i-1} (or IV) — used to compute real plaintext
   oracle: Oracle;
+  // Defaults to true: the correct attack. Set false to run the naive path that
+  // accepts the first hit without the perturbation check (PRD §3). It exists so
+  // the interface can let a reader switch the check off and watch a block
+  // corrupt, rather than being told the check matters. It is never the default
+  // and PRD §7.2's assertion still pins the correct path.
+  disambiguate?: boolean;
 }
 
 function submit(oracle: Oracle, craft: Uint8Array, target: Uint8Array): boolean {
@@ -27,6 +33,7 @@ function perturb(v: number): number {
 
 export function recoverBlock(input: BlockInput): BlockRecovery {
   const { blockIndex, targetBlock, realPrevious, oracle } = input;
+  const disambiguate = input.disambiguate !== false;
   const sweeps: SweepStep[] = [];
   const disambiguations: Disambiguation[] = [];
   const bytes: ByteRecovered[] = [];
@@ -64,6 +71,13 @@ export function recoverBlock(input: BlockInput): BlockRecovery {
         const valid = ask(craft);
         sweeps.push({ targetIndex: index, candidate, craftedBlock: craft.slice(), valid });
         if (valid) {
+          if (!disambiguate) {
+            // The naive path: accept the first hit. On a block whose plaintext
+            // makes a longer pad reachable first, this records the wrong
+            // intermediate byte and silently corrupts everything after it.
+            accepted = candidate;
+            break;
+          }
           // Disambiguation: perturb byte 14 and re-query.
           const probe = craft.slice();
           probe[14] = perturb(probe[14]);

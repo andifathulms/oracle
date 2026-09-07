@@ -7,7 +7,7 @@ import type { AttackTarget } from '../secret';
 import { recoverBlock } from './block';
 import type { MessageRecovery, BlockRecovery } from './trace';
 
-export function recoverMessage(target: AttackTarget): MessageRecovery {
+export function recoverMessage(target: AttackTarget, disambiguate = true): MessageRecovery {
   const blocks = splitBlocks(target.ciphertext);
   const recoveries: BlockRecovery[] = [];
   const intermediateParts: Uint8Array[] = [];
@@ -22,6 +22,7 @@ export function recoverMessage(target: AttackTarget): MessageRecovery {
       targetBlock: blocks[i],
       realPrevious,
       oracle: target.oracle,
+      disambiguate,
     });
     recoveries.push(rec);
 

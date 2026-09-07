@@ -14,6 +14,9 @@ export interface SessionConfig {
   seed: string;
   cipher: CipherKind;
   mac: boolean;
+  // The false-positive check, on by default. Off runs the naive attack so a
+  // reader can watch it corrupt a block instead of being told it would.
+  disambiguate: boolean;
   speed: number; // 0..1 continuous scrubber
   mode: Mode;
 }
@@ -22,6 +25,7 @@ export const DEFAULT_CONFIG: SessionConfig = {
   seed: 'oracle',
   cipher: 'aes',
   mac: false,
+  disambiguate: true,
   speed: 0.35,
   mode: 'recover',
 };
@@ -33,6 +37,7 @@ export function readConfig(): SessionConfig {
   const cipher = params.get('cipher');
   if (cipher === 'aes' || cipher === 'toy') cfg.cipher = cipher;
   if (params.get('mac') === '1') cfg.mac = true;
+  if (params.get('dis') === '0') cfg.disambiguate = false;
   const speed = Number(params.get('speed'));
   if (!Number.isNaN(speed) && speed >= 0 && speed <= 1) cfg.speed = speed;
   const mode = params.get('mode');
@@ -45,6 +50,7 @@ export function writeConfig(cfg: SessionConfig): void {
   params.set('seed', cfg.seed);
   params.set('cipher', cfg.cipher);
   params.set('mac', cfg.mac ? '1' : '0');
+  params.set('dis', cfg.disambiguate ? '1' : '0');
   params.set('speed', cfg.speed.toFixed(2));
   params.set('mode', cfg.mode);
   const next = '#' + params.toString();

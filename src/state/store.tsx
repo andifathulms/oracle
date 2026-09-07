@@ -36,6 +36,7 @@ interface Store {
   setSeed: (seed: string) => void;
   setCipher: (c: CipherKind) => void;
   setMac: (on: boolean) => void;
+  setDisambiguate: (on: boolean) => void;
   setSpeed: (s: number) => void;
   setMode: (m: Mode) => void;
   play: () => void;
@@ -116,10 +117,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   // Speed and mode do not rebuild the attack.
   const { target, recovery, timeline } = useMemo(() => {
     const t = buildTarget({ seed: config.seed, cipher: config.cipher, mac: config.mac });
-    const r = recoverMessage(t);
+    const r = recoverMessage(t, config.disambiguate);
     const tl = buildTimeline(r);
     return { target: t, recovery: r, timeline: tl };
-  }, [config.seed, config.cipher, config.mac]);
+  }, [config.seed, config.cipher, config.mac, config.disambiguate]);
 
   // Reset playback when the trace changes, unless a shared moment is waiting.
   // The link's index is clamped to the trace actually built: a link made
@@ -244,6 +245,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setSeed: (seed) => patch({ seed }),
     setCipher: (cipher) => patch({ cipher }),
     setMac: (mac) => patch({ mac }),
+    setDisambiguate: (disambiguate) => patch({ disambiguate }),
     setSpeed: (speed) => patch({ speed }),
     setMode: (mode) => patch({ mode }),
     play,

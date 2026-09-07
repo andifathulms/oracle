@@ -54,7 +54,11 @@ export function Silence() {
       <dl className="silence-figures">
         <Figure k="bytes recovered" v={on ? '0' : String(view.recovered.length)} dead={on} />
         <Figure k="calls spent" v={callsAt.toLocaleString()} dead={on} />
-        <Figure k="oracle" v={recovery.starved ? 'starved' : 'leaking'} dead={on} word />
+        {/* Starvation is a property of the oracle, not of the attack. With the
+            MAC off the oracle is still answering truthfully; a stalled naive
+            run sets recovery.starved too, and reporting that here as "starved"
+            would credit the MAC for a failure it had nothing to do with. */}
+        <Figure k="oracle" v={on && recovery.starved ? 'starved' : 'leaking'} dead={on} word />
       </dl>
     </section>
   );

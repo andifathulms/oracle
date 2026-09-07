@@ -7,7 +7,7 @@ import { hex } from './format';
 import './disambiguation.css';
 
 export function DisambiguationBar() {
-  const { view, timeline, index } = useStore();
+  const { view, timeline, index, config, setDisambiguate } = useStore();
 
   // False positives caught *so far* — evidence the check is not decorative.
   // Deliberately counted over the replayed events only, not over the whole
@@ -26,15 +26,27 @@ export function DisambiguationBar() {
   // inaudible.
   if (!view.disambiguating) {
     return (
-      <div className="disambig idle">
+      <div className={`disambig idle ${config.disambiguate ? '' : 'off'}`}>
         <span className="disambig-dot" />
         <span className="disambig-term">disambiguation</span>
         <span className="disambig-detail">
-          The last byte double-checks itself before committing: a genuine 0x01, or a longer pad
-          in disguise.
+          {config.disambiguate
+            ? 'The last byte double-checks itself before committing: a genuine 0x01, or a longer pad in disguise.'
+            : 'The check is off. The first yes is taken at face value, so a longer pad read as a 01 records the wrong intermediate byte. Every later byte in that block is then crafted against a wrong tail, no guess validates, and the recovery stops where it stands.'}
         </span>
+        <button
+          className={`disambig-switch ${config.disambiguate ? 'on' : 'off'}`}
+          aria-pressed={!config.disambiguate}
+          onClick={() => setDisambiguate(!config.disambiguate)}
+        >
+          {config.disambiguate ? 'try it without the check' : 'restore the check'}
+        </button>
         <span className="disambig-count label">
-          {caught === 0 ? 'None caught yet' : `${caught} caught so far`}
+          {!config.disambiguate
+            ? 'Check off: the first yes is accepted'
+            : caught === 0
+              ? 'None caught yet'
+              : `${caught} caught so far`}
         </span>
       </div>
     );

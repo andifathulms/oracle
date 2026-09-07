@@ -56,3 +56,14 @@
 @media (max-width: 640px) {
   .disambig-count { display: none; }
 }
+
+/* The switch that turns the check off. It sits on the check itself, because the
+   point is not that the reader is told the check matters — it is that they can
+   remove it and watch the block come out wrong. */
+.disambig-switch { margin-left: auto; white-space: nowrap; }
+.disambig-switch.off {
+  color: var(--recovered-bright);
+  border-color: color-mix(in srgb, var(--recovered) 45%, var(--rule));
+}
+.disambig.off { border-color: color-mix(in srgb, var(--recovered) 40%, var(--rule)); }
+.disambig.off .disambig-count { color: var(--recovered); }
