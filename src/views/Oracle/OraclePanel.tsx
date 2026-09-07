@@ -56,6 +56,29 @@ export function OraclePanel() {
 
       <p className="oracle-question">Is the padding valid?</p>
 
+      {/* The rule the oracle applies, stated where it is applied. Everything
+          downstream depends on it: why forcing 01 proves anything, why 02 02 is
+          also valid and creates the false positive, why perturbing byte 14
+          settles it. The app used the concept in six places and defined it in
+          none. */}
+      <div className="oracle-rule">
+        <p className="rule-name label">PKCS7 padding</p>
+        <p className="rule-text">
+          A message is padded so the last <em>n</em> bytes all hold the value <em>n</em>. The
+          check passes only if they do.
+        </p>
+        <ul className="rule-examples" aria-label="Valid padding examples">
+          <li><code>01</code></li>
+          <li><code>02 02</code></li>
+          <li><code>03 03 03</code></li>
+          <li className="rule-more">up to sixteen bytes of <code>10</code></li>
+        </ul>
+        <p className="rule-text">
+          The oracle answers this and nothing else. It never says which byte was wrong, or how
+          close a guess came.
+        </p>
+      </div>
+
       <div className="oracle-calls">
         <Odometer value={callsAt} className="calls-figure" />
         <span className="calls-label label">oracle calls</span>
