@@ -25,7 +25,7 @@ the engine implements. DESIGN.md is how it looks.
 - Vite + React 18 + TypeScript, strict.
 - Plain CSS with custom properties.
 - No crypto library for the attack logic — the CBC driver, PKCS7, and the attack are written
-  here. A real AES block cipher may come from a small audited WASM (see §2); everything around
+  here. The real AES block cipher is written here too (see §2); everything around
   it is ours.
 - No charting library. Every view is byte-cells and XOR diagrams.
 - Vitest.
@@ -38,7 +38,7 @@ the engine implements. DESIGN.md is how it looks.
 │  ├─ engine/
 │  │  ├─ rng.ts
 │  │  ├─ bytes.ts             # hex, xor, block helpers
-│  │  ├─ aes.ts               # wraps the WASM block cipher; also the toy permutation
+│  │  ├─ aes.ts               # AES-128 and the toy permutation, behind one interface
 │  │  ├─ cbc.ts               # encrypt / decrypt driver
 │  │  ├─ pkcs7.ts             # pad / validate
 │  │  ├─ mac.ts               # HMAC for encrypt-then-MAC
@@ -89,7 +89,11 @@ bit, and it is for the UI, not for the attack logic.
 
 `aes.ts` exposes `encryptBlock` and `decryptBlock` over a 16-byte block, backed by:
 
-- A small audited AES WASM for the real mode. Bundle it; do not fetch it.
+- A real AES-128 written here in TypeScript, pinned by the FIPS-197 known-answer vector in a
+  test. This started as "a small audited AES WASM, bundled not fetched", and the WASM never
+  happened: a hand-written AES needs no binary to audit, no loader, and no exception to §2's
+  no-network rule, and it costs about 7.5 KB of source. The rule that mattered — no crypto
+  library for anything the attack touches — holds either way.
 - A toy permutation for the toy mode — a fixed, seeded, reversible byte-shuffle-and-substitute.
   It must be a genuine bijection (`decryptBlock(encryptBlock(x)) === x`) or the CBC round-trip
   test fails.
@@ -237,7 +241,7 @@ to every question, so there is nothing to learn from it.
 Do not build the UI before step 4 passes.
 
 1. Bytes, RNG, PKCS7, CBC driver, toy permutation. `cbc-pkcs7.test.ts`.
-2. Real AES WASM wired in, known-answer test.
+2. Real AES-128 written and pinned by the FIPS-197 known-answer test.
 3. The oracle and the secret boundary. `view-blindness.test.ts` (as far as the engine side).
 4. The attack with disambiguation. `attack.test.ts` and `disambiguation.test.ts`, including
    the assertion that the naive path fails on a `0x02`-terminated plaintext. **Gate.**

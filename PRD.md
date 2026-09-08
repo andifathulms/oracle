@@ -174,7 +174,7 @@ and the counter earns the point that this is cheap, not magical.
 
 ### 5.5 The cipher panel
 
-The block cipher shown as a labelled box. A toggle switches it between a real AES (WebAssembly)
+The block cipher shown as a labelled box. A toggle switches it between a real AES-128
 and a clearly-labelled toy permutation.
 
 **The switch changes nothing about the attack**, and that is the demonstration: the same attack
@@ -287,6 +287,6 @@ screen's content came from the attack.
 9. Every view has a keyboard-reachable table equivalent; the recovered intermediate and
    plaintext export as hex.
 10. Zero runtime network requests, and no network APIs in the bundle at all.
-11. Bundle under 250 KB gzipped including the AES WASM.
+11. Bundle under 250 KB gzipped.
 12. Usable at 380 px, with the three-layer stack legible — it may scroll horizontally on a
     phone, one block at a time.
