@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Oracle — recover a message from a single bit of feedback</title>
-    <meta
-      name="description"
-      content="The padding oracle attack, shown. A message recovered from one bit of feedback, without the key."
-    />
+    <!--
+      Title, description, canonical, Open Graph, Twitter and the no-script
+      summary are all injected at build time from src/meta.ts, so the page and
+      the document head cannot describe the app differently. Do not hand-write
+      them here. See the oracle-meta plugin in vite.config.ts.
+    -->
+    <!--%ORACLE_META%-->
   </head>
   <body>
     <div id="root"></div>
+    <!--%ORACLE_NOSCRIPT%-->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

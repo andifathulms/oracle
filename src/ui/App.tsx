@@ -11,6 +11,7 @@ import { Silence } from '../views/Silence/Silence';
 import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
 import { Announcer } from './Announcer';
+import { SITE } from '../meta';
 import { Overture } from './Overture';
 import { WorkedExample } from './WorkedExample';
 import { Transport } from './Transport';
@@ -63,8 +64,8 @@ function Shell() {
           <div className="brand">
             <Mark />
             <div className="brand-text">
-              <span className="brand-name">Oracle</span>
-              <span className="brand-sub">Recover a message from one bit of feedback</span>
+              <span className="brand-name">{SITE.name}</span>
+              <span className="brand-sub">{SITE.tagline}</span>
             </div>
           </div>
 

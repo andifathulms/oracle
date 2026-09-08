@@ -7,6 +7,7 @@
 // It renders no attack state and drives no logic. The button is a second
 // trigger for the transport's existing toggle().
 import { useStore } from '../state/store';
+import { SITE } from '../meta';
 import './overture.css';
 
 export function Overture() {
@@ -22,11 +23,9 @@ export function Overture() {
     <header className="overture">
       <h1 className="overture-title">Read a message without its key.</h1>
 
-      <p className="overture-lede">
-        A server that reveals only whether a message&rsquo;s padding is valid leaks enough to
-        rebuild the entire message. This runs that attack live, and never hands the screen the
-        key or the plaintext.
-      </p>
+      {/* The same string the document head carries, so a shared card and the
+          page can never describe the app differently (src/meta.ts). */}
+      <p className="overture-lede">{SITE.description}</p>
 
       <button className="overture-cta" onClick={toggle}>
         {cta}
