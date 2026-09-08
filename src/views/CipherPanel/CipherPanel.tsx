@@ -10,18 +10,30 @@ import { useStore } from '../../state/store';
 import './cipher.css';
 
 export function CipherPanel() {
-  const { config, setCipher } = useStore();
+  const { config, setCipher, recovery } = useStore();
 
-  // Both ciphers, costed against the same message. Always without the MAC, so
-  // the comparison is about the cipher and nothing else. The engine is pure and
-  // a full recovery is milliseconds, so this only reruns on a seed change.
+  // Both ciphers, costed against the same message. Always without the MAC and
+  // always with the disambiguation on, so the comparison is about the cipher
+  // and nothing else.
+  //
+  // One of the two is usually a recovery the store has already run. Recomputing
+  // it cost about 40ms of the 161ms this app spent on the main thread before
+  // first paint, for a number it was already holding. So when the session's own
+  // recovery was run under exactly these conditions, reuse it.
+  const sessionMatches = !config.mac && config.disambiguate;
+  const sessionCipher = config.cipher;
+  const sessionCalls = recovery.totalCalls;
+
   const rows = useMemo(
     () =>
       (['aes', 'toy'] as const).map((kind) => ({
         kind,
-        calls: recoverMessage(buildTarget({ seed: config.seed, cipher: kind, mac: false })).totalCalls,
+        calls:
+          sessionMatches && kind === sessionCipher
+            ? sessionCalls
+            : recoverMessage(buildTarget({ seed: config.seed, cipher: kind, mac: false })).totalCalls,
       })),
-    [config.seed],
+    [config.seed, sessionMatches, sessionCipher, sessionCalls],
   );
   return (
     <section className="cipher panel" aria-label="Block cipher">
