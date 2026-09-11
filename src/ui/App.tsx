@@ -172,21 +172,28 @@ function Shell() {
 }
 
 // The mark: a void cell resolving to gold. The app in one glyph.
+// The brand mark at its 32 tier: four cells, one of them recovered. Drawn from
+// the same geometry as favicon.svg and the icon set, in the brand's own palette
+// rather than the app's tokens, so the tab icon and the masthead are the same
+// mark and not two near-misses.
+//
+// Two things went with the old placeholder. It pulsed the gold cell on an
+// infinite SMIL <animate>, which the global prefers-reduced-motion block does
+// not reach: that rule zeroes CSS animation and transition durations, and SMIL
+// is neither. It was the only SMIL in the app and the only motion that survived
+// the reduced-motion pass. And the brand brief is explicit that gold marks a
+// byte the attacker has actually solved and is "never a brand flourish" — a
+// pulsing gold cell is exactly the flourish it rules out.
 function Mark() {
   return (
-    <svg className="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-      <rect x="1" y="1" width="28" height="28" rx="4" fill="var(--void)" stroke="var(--rule-strong)" />
-      <rect x="6.5" y="6.5" width="7" height="7" rx="1.5" fill="var(--crafted)" opacity="0.85" />
-      <rect x="16.5" y="6.5" width="7" height="7" rx="1.5" fill="var(--ink-ghost)" opacity="0.5" />
-      <rect x="6.5" y="16.5" width="7" height="7" rx="1.5" fill="var(--ink-ghost)" opacity="0.5" />
-      <rect x="16.5" y="16.5" width="7" height="7" rx="1.5" fill="var(--recovered)">
-        <animate
-          attributeName="opacity"
-          values="0.25;1;0.25"
-          dur="4.5s"
-          repeatCount="indefinite"
-        />
-      </rect>
+    <svg className="mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="6" fill="#0E1116" />
+      <g transform="scale(0.32)">
+        <rect x="12" y="20" width="32" height="26" fill="#5A6470" />
+        <rect x="56" y="20" width="32" height="26" fill="#5A6470" />
+        <rect x="12" y="54" width="32" height="26" fill="#5A6470" />
+        <rect x="56" y="54" width="32" height="26" fill="#E3B448" />
+      </g>
     </svg>
   );
 }
