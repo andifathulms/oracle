@@ -14,7 +14,13 @@ const esc = (v: string) =>
 // point at. A card with a title, a description and a site name is still far
 // better than the bare <title> fallback that shipped before, and inventing an
 // image would mean adding a build dependency to generate one.
-function oracleMeta(): Plugin {
+function oracleMeta(base: string): Plugin {
+  // Assets live in public/ and are served from the deploy's base path, which is
+  // "/" locally and "/oracle/" on GitHub Pages.
+  const asset = (f: string) => `${base}${f}`;
+  // og:image must be absolute: crawlers do not resolve it against the page.
+  const absolute = (f: string) => new URL(f, SITE.url).href;
+
   return {
     name: 'oracle-meta',
     transformIndexHtml(html) {
@@ -27,18 +33,24 @@ function oracleMeta(): Plugin {
         `<meta property="og:title" content="${esc(DOC_TITLE)}" />`,
         `<meta property="og:description" content="${esc(SITE.description)}" />`,
         `<meta property="og:url" content="${esc(SITE.url)}" />`,
-        `<meta name="twitter:card" content="summary" />`,
+        `<meta property="og:image" content="${esc(absolute('og.png'))}" />`,
+        `<meta property="og:image:width" content="1200" />`,
+        `<meta property="og:image:height" content="630" />`,
+        `<meta property="og:image:alt" content="${esc(
+          'The Oracle mark: a block of ciphertext mid-attack, its recovered bytes in gold.',
+        )}" />`,
+        // summary_large_image, now that there is an image worth showing.
+        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta name="twitter:image" content="${esc(absolute('og.png'))}" />`,
         `<meta name="twitter:title" content="${esc(DOC_TITLE)}" />`,
         `<meta name="twitter:description" content="${esc(SITE.description)}" />`,
         `<meta name="theme-color" content="#0f1218" />`,
-        // A void cell resolving to gold: the app's mark, inline, so the tab
-        // icon costs no request. The favicon.ico probe was a measured 404.
-        `<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(
-          '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
-            '<rect width="32" height="32" rx="6" fill="#0a0d12"/>' +
-            '<rect x="7" y="7" width="18" height="18" rx="3" fill="#c8a24a"/>' +
-            '</svg>',
-        )}" />`,
+        // The real mark, replacing the hand-drawn data URI that stood in for
+        // it. SVG first for anything modern; the 32 PNG is the fallback.
+        `<link rel="icon" type="image/svg+xml" href="${esc(asset('favicon.svg'))}" />`,
+        `<link rel="icon" type="image/png" sizes="32x32" href="${esc(asset('icon-32.png'))}" />`,
+        `<link rel="apple-touch-icon" sizes="180x180" href="${esc(asset('apple-touch-icon.png'))}" />`,
+        `<link rel="manifest" href="${esc(asset('site.webmanifest'))}" />`,
       ].join('\n    ');
 
       // Crawlers and social bots do not execute JavaScript, and the served body
@@ -61,7 +73,7 @@ function oracleMeta(): Plugin {
 // base is set for GitHub Pages project-page hosting; override with BASE_PATH.
 export default defineConfig(({ mode }) => ({
   base: process.env.BASE_PATH ?? '/',
-  plugins: [react(), oracleMeta()],
+  plugins: [react(), oracleMeta(process.env.BASE_PATH ?? '/')],
   // Force production React for real builds regardless of ambient NODE_ENV
   // (vitest sets NODE_ENV=test, which would otherwise bundle dev React whose
   // warning strings mention fetch and trip the no-network guard). Not applied
