@@ -5,3 +5,8 @@ dist-ssr
 .DS_Store
 .vite
 coverage
+
+# Brand export masters. The source of truth lives outside the repo; the handful
+# of assets the app actually serves are vendored into public/ so they deploy.
+# Re-export there, then copy forward what changed.
+exports
