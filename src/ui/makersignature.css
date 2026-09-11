@@ -1,0 +1,75 @@
+/* The maker's mark. Personal credit, deliberately kept apart from the colophon's
+   data notice beside it: that one is about the app, this one is about who made
+   it, and merging them would read as a legal line. It adds no divider of its
+   own — it sits inside the footer's existing top seam, right-aligned opposite
+   the notice on desktop and stacked beneath it on a phone. */
+.maker {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.maker-line {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-small);
+  color: var(--ink-faint);   /* 6.50 : 1 on --bg */
+}
+
+.maker-name {
+  color: var(--ink-mid);     /* 8.94 : 1, a step brighter than the line */
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 2px;
+  transition: color 140ms var(--ease-standard), text-decoration-color 140ms var(--ease-standard);
+}
+.maker-name:hover {
+  color: var(--ink);
+  text-decoration-color: var(--crafted-bright);
+}
+
+.maker-dot { color: var(--ink-ghost); }
+
+/* Tabular, so the year sits on the same rhythm as every other figure here. */
+.maker-year {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.maker-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.maker-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* --target-min is the 24px WCAG 2.5.8 floor; the padding takes the real tap
+     area past it without making the icons look heavy. */
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  padding: 5px;
+  border-radius: var(--radius);
+  color: var(--ink-faint);
+  transition: color 140ms var(--ease-standard), background 140ms var(--ease-standard);
+}
+.maker-icon:hover {
+  color: var(--crafted-bright);
+  background: var(--panel-raised);
+}
+
+@media (max-width: 720px) {
+  /* Stacks below the notice rather than squeezing beside it. */
+  .maker {
+    margin-left: 0;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    gap: var(--s-1);
+  }
+}

@@ -88,12 +88,17 @@
   padding: var(--s-3) var(--s-3) calc(var(--s-3) + var(--transport-h));
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--s-2) var(--s-3);
+  align-items: center;
   font-family: var(--font-mono);
   font-size: var(--t-small);
   color: var(--ink-ghost);
+  /* The footer's single seam. The maker's mark reuses it rather than adding
+     another rule of its own. */
   border-top: 1px solid var(--rule);
 }
+/* The notice keeps the row behaviour the colophon used to have directly. */
+.colophon-notice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
 .colophon code { color: var(--ink-faint); }
 .colophon-dot { color: var(--ink-ghost); }
 

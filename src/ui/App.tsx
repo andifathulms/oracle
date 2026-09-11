@@ -12,6 +12,7 @@ import { BitFlip } from '../views/BitFlip/BitFlip';
 import { Section } from './Section';
 import { Announcer } from './Announcer';
 import { SITE } from '../meta';
+import { MakerSignature } from './MakerSignature';
 import { Overture } from './Overture';
 import { WorkedExample } from './WorkedExample';
 import { Transport } from './Transport';
@@ -161,17 +162,22 @@ function Shell() {
       {!bitflip ? <Transport /> : null}
 
       <footer className="colophon">
-        <span>
-          seed <code>{config.seed}</code>
-        </span>
-        <span className="colophon-dot" aria-hidden="true">·</span>
-        <span>Everything is synthetic and stays on this device. The app has no network code at all.</span>
+        {/* The app's own notice. Kept as one group so the maker's mark can sit
+            opposite it without the two reading as a single line. */}
+        <div className="colophon-notice">
+          <span>
+            seed <code>{config.seed}</code>
+          </span>
+          <span className="colophon-dot" aria-hidden="true">·</span>
+          <span>Everything is synthetic and stays on this device. The app has no network code at all.</span>
+        </div>
+
+        <MakerSignature />
       </footer>
     </div>
   );
 }
 
-// The mark: a void cell resolving to gold. The app in one glyph.
 // The brand mark at its 32 tier: four cells, one of them recovered. Drawn from
 // the same geometry as favicon.svg and the icon set, in the brand's own palette
 // rather than the app's tokens, so the tab icon and the masthead are the same
